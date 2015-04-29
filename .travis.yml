@@ -1,2 +1,2 @@
 language: java
-script: mvn -B clean jacoco:prepare-agent verify jacoco:report findbugs:findbugs checkstyle:checkstyle
+script: mvn -B clean verify findbugs:findbugs checkstyle:checkstyle pmd:pmd pmd:cpd
