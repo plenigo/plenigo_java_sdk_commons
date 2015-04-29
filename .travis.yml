@@ -1,1 +1,2 @@
 language: java
+script: maven -B clean jacoco:prepare-agent verify jacoco:report findbugs:findbugs checkstyle:checkstyle
