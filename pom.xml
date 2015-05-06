@@ -6,11 +6,39 @@
     <artifactId>java-sdk-commons</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
+    <name>plenigo Java SDK Commons</name>
+
+    <description>Commons library used by the plenigo Java SDK and the plenigo Android SDK.</description>
+
+    <url>https://www.plenigo.com</url>
+
+    <licenses>
+        <license>
+            <name>GNU Affero General Public License</name>
+            <url>https://www.gnu.org/licenses/agpl-3.0.html</url>
+        </license>
+    </licenses>
+
     <scm>
-        <developerConnection>
-            scm:git:ssh://git@repos.s-develop.com:7999/plenigo/java_sdk_commons.git
-        </developerConnection>
+        <connection>scm:git:git@github.com:plenigo/plenigo_java_sdk_commons.git</connection>
+        <developerConnection>scm:git:git@github.com:plenigo/plenigo_java_sdk_commons.git</developerConnection>
+        <url>git@github.com:plenigo/plenigo_java_sdk_commons.git</url>
     </scm>
+
+    <developers>
+        <developer>
+            <name>Ricardo Torres</name>
+            <email>rtorres@okkralabs.com</email>
+            <organization>Okkralabs</organization>
+        </developer>
+        <developer>
+            <name>Maximilian Schweitzer</name>
+            <email>maximilian.schweitzer@plenigo.com </email>
+            <organization>plenigo GmbH</organization>
+        </developer>
+    </developers>
+
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -326,16 +354,4 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <distributionManagement>
-        <repository>
-            <id>plenigo</id>
-            <url>https://mvn.s-develop.com/artifactory/plenigo</url>
-        </repository>
-        <snapshotRepository>
-            <id>plenigo</id>
-            <url>https://mvn.s-develop.com/artifactory/plenigo</url>
-        </snapshotRepository>
-    </distributionManagement>
-
 </project>
