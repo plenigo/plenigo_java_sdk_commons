@@ -2,8 +2,6 @@ package com.plenigo.sdk.internal.services;
 
 import com.plenigo.sdk.models.MeteredUserData;
 
-import java.util.logging.Logger;
-
 /**
  * <p>
  * This class represents the internal metered services common functionality.
