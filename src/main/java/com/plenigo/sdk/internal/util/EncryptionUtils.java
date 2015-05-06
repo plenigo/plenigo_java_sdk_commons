@@ -3,6 +3,12 @@ package com.plenigo.sdk.internal.util;
 import com.plenigo.sdk.PlenigoException;
 import com.plenigo.sdk.internal.ErrorCode;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.InvalidAlgorithmParameterException;
@@ -11,12 +17,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 
 /**
  * <p>
