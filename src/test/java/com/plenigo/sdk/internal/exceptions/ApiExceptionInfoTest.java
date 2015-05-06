@@ -11,8 +11,14 @@ import org.junit.Test;
 public class ApiExceptionInfoTest {
 
     @Test
-    public void testToString() {
+    public void testCreate() {
         ApiExceptionInfo info = new ApiExceptionInfo(ErrorCode.CANNOT_ACCESS_PRODUCT);
         assertNotNull(info);
+    }
+
+    @Test
+    public void testToString() {
+        ApiExceptionInfo info = new ApiExceptionInfo(ErrorCode.CANNOT_ACCESS_PRODUCT);
+        assertNotNull(info.toString());
     }
 }

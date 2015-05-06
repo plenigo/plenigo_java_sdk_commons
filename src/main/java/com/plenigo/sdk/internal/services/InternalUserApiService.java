@@ -7,7 +7,6 @@ import com.plenigo.sdk.internal.ApiURLs;
 import com.plenigo.sdk.internal.ErrorCode;
 import com.plenigo.sdk.internal.models.Address;
 import com.plenigo.sdk.internal.util.HttpConfig;
-import com.plenigo.sdk.internal.util.RestClient;
 import com.plenigo.sdk.internal.util.SdkUtils;
 import com.plenigo.sdk.models.UserData;
 
@@ -17,8 +16,19 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 /**
- * Created by rtorres on 07/12/14.
+ * <p>
+ * This class represents the internal user services functionality.
+ * </p>
+ * <p>
+ * <b>IMPORTANT:</b> This class is part of the internal API, please do not use it, because it can
+ * be removed in future versions of the SDK or access to such elements could
+ * be changed from 'public' to 'default' or less.
+ * </p>
+ * <p>
+ * <strong>Thread safety:</strong> This class is <b>not</b> thread safe.
+ * </p>
  */
 public class InternalUserApiService {
     private static final Logger LOGGER = Logger.getLogger(InternalUserApiService.class.getName());

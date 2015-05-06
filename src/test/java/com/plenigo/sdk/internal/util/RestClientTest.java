@@ -285,4 +285,14 @@ public class RestClientTest {
                 JSON_ASPX, QUERY_SUSHI_SOURCES_WEB);
         assertNotNull(result);
     }
+
+    @Test
+    public final void testCreateWithEncodedPassword() throws Exception {
+        assertNotNull(new RestClient(""));
+    }
+
+    @Test
+    public final void testCreateWithUserAndPassword() throws Exception {
+        assertNotNull(new RestClient("username","password"));
+    }
 }

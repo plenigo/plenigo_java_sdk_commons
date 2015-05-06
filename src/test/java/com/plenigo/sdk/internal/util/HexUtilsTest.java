@@ -3,8 +3,12 @@ package com.plenigo.sdk.internal.util;
 import org.junit.Test;
 import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+
+import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -14,6 +18,13 @@ import java.lang.reflect.Method;
  */
 public class HexUtilsTest {
 
+    @Test
+    public void testConstructorIsPrivate() throws Exception {
+        Constructor constructor = HexUtils.class.getDeclaredConstructor();
+        assertTrue(Modifier.isPrivate(constructor.getModifiers()));
+        constructor.setAccessible(true);
+        constructor.newInstance();
+    }
     /**
      * This tests the {@link HexUtils#toDigit(char, int)} method
      * with an invalid character.

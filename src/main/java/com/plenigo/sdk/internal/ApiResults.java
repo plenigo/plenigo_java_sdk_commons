@@ -140,30 +140,30 @@ public final class ApiResults {
     public static final String FREE_VIEWS_ALLOWED = "freeViews";
 
     /**
-     * Free views taken result param,
+     * Free views taken result param.
      */
     public static final String FREE_VIEWS_TAKEN = "viewsTaken";
 
     /**
-     * Has the limit been reached result param,
+     * Has the limit been reached result param.
      */
     public static final String LIMIT_REACHED = "limitReached";
 
 
     /**
-     * Login Free views allowed result param,
+     * Login Free views allowed result param.
      */
     public static final String FREE_LOGIN_VIEWS_ALLOWED = "freeAfterLogin";
 
 
     /**
-     * Login Free views allowed result param,
+     * Login Free views allowed result param.
      */
     public static final String FREE_LOGIN_VIEWS_TAKEN = "freeAfterLoginTaken";
 
 
     /**
-     * Has the view limit after login reached result param,
+     * Has the view limit after login reached result param.
      */
     public static final String LOGIN_LIMIT_REACHED = "limitReachedAfterLogin";
 

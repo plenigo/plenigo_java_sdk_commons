@@ -39,7 +39,7 @@ public class MeteredUserData implements Serializable {
      * @param isLimitReached         indicates if the limit has been reached
      * @param loginFreeViewsAllowed  indicates how many free views are allowed after login
      * @param loginFreeViewsTaken    indicates the amount of views that the user has taken after login
-     * @param loginLimitReached    indicates if the limit has been reached after login
+     * @param loginLimitReached      indicates if the limit has been reached after login
      */
     public MeteredUserData(Boolean isMeteredViewActivated, Long freeViewsAllowed, Long viewsTaken, Boolean isLimitReached, Long loginFreeViewsAllowed
             , Long loginFreeViewsTaken, Boolean loginLimitReached) {
@@ -134,15 +134,15 @@ public class MeteredUserData implements Serializable {
     public void addViews(List<String> articles) {
         viewsTaken.addAndGet(articles.size());
         uniqueVisitedSites.addAll(articles);
-        if(viewsTaken.longValue() >= freeViewsAllowed){
+        if (viewsTaken.longValue() >= freeViewsAllowed) {
             isLimitReached = true;
         }
     }
 
     /**
-     * Returns the unique
+     * Returns the unique amount of visited sites.
      *
-     * @return
+     * @return the amount of visited sites
      */
     public Set<String> getUniqueVisitedSites() {
         return uniqueVisitedSites;

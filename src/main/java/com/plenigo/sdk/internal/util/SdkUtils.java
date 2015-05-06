@@ -277,6 +277,17 @@ public final class SdkUtils {
         return output;
     }
 
+    /**
+     * Converts the input into the given output class using a one parameter constructor strategy.
+     *
+     * @param outputClass the output class to use
+     * @param input       the input information
+     * @param <O>         the type of the output class
+     *
+     * @return the converted instance
+     *
+     * @throws PlenigoException if an error happens during conversion
+     */
     private static <O> O convert(Class<O> outputClass, String input) throws PlenigoException {
         O output = null;
         try {
@@ -312,6 +323,7 @@ public final class SdkUtils {
      *
      * @param value       The value to convert
      * @param outputClass The output class
+     * @param <O>         type of the output class
      *
      * @return The output class value
      *

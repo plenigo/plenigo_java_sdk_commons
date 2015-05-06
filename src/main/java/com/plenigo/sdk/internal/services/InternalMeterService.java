@@ -1,13 +1,7 @@
 package com.plenigo.sdk.internal.services;
 
-import com.plenigo.sdk.PlenigoException;
-import com.plenigo.sdk.internal.util.EncryptionUtils;
-import com.plenigo.sdk.internal.util.HexUtils;
-import com.plenigo.sdk.internal.util.SdkUtils;
 import com.plenigo.sdk.models.MeteredUserData;
 
-import java.net.HttpCookie;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -25,8 +19,14 @@ import java.util.logging.Logger;
  */
 public class InternalMeterService {
 
-    private static final Logger LOGGER = Logger.getLogger(InternalMeterService.class.getName());
-
+    /**
+     * Finds out if the given metered user data still has free views.
+     *
+     * @param meteredUserData the metered user data to analyze
+     * @param isLoggedIn      indicates if the user is logged in
+     *
+     * @return true if the user has free views, false otherwise
+     */
     public boolean hasFreeViews(MeteredUserData meteredUserData, boolean isLoggedIn) {
         //isCookieAvailable
         if (meteredUserData == null) {
