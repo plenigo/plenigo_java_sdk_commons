@@ -1,6 +1,6 @@
 package com.plenigo.sdk.internal.services;
 
-import com.plenigo.sdk.models.MeteredUserData;
+import com.plenigo.sdk.internal.models.BaseUserMeteredData;
 
 /**
  * <p>
@@ -20,30 +20,34 @@ public class InternalMeterService {
     /**
      * Finds out if the given metered user data still has free views.
      *
-     * @param meteredUserData the metered user data to analyze
-     * @param isLoggedIn      indicates if the user is logged in
+     * @param baseUserMeteredData the metered user data to analyze
+     * @param isLoggedIn          indicates if the user is logged in
+     * @param isExpiredData       indicates if the user data has expired
      *
      * @return true if the user has free views, false otherwise
      */
-    public boolean hasFreeViews(MeteredUserData meteredUserData, boolean isLoggedIn) {
+    public boolean hasFreeViews(BaseUserMeteredData baseUserMeteredData, boolean isLoggedIn, boolean isExpiredData) {
         //isCookieAvailable
-        if (meteredUserData == null) {
+        if (baseUserMeteredData == null) {
             return true;
         }
         //isMeteredViewActivated
-        if (meteredUserData.isMeteredViewActivated() == null || !meteredUserData.isMeteredViewActivated()) {
+        if (baseUserMeteredData.isMeteredViewActivated() == null || !baseUserMeteredData.isMeteredViewActivated()) {
             return false;
         }
 
-        //is login limit reached
-        if (isLoggedIn) {
-            if ((meteredUserData.isLoginLimitReached() == null || !meteredUserData.isLoginLimitReached())) {
-                return true;
-            }
-        } else if (meteredUserData.isLimitReached() == null) {
-            //isLimitReached
+        if (isExpiredData) {
             return true;
-        } else if (!meteredUserData.isLimitReached()) {
+        }
+
+        Boolean isLimitReached;
+        if (isLoggedIn) {
+            isLimitReached = baseUserMeteredData.isLoginLimitReached();
+        } else {
+            isLimitReached = baseUserMeteredData.isLimitReached();
+        }
+
+        if (isLimitReached == null || !isLimitReached) {
             return true;
         }
         return false;

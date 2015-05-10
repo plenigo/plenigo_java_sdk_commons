@@ -38,6 +38,11 @@ public final class ApiURLs {
     public static final String DEFAULT_PLENIGO_URL = "https://plenigo.com";
 
     /**
+     * OAuth2 plenigo URL.
+     */
+    public static final String OAUTH_PLENIGO_URL = "https://api.plenigo.com";
+
+    /**
      * This URL is used to check if an user has access to a product.
      * This is usually used to see if a user has bought a product or not.
      */
@@ -77,7 +82,10 @@ public final class ApiURLs {
      */
     public static final String LIST_PRODUCTS = API_BASE_URL + "/products";
 
-
+    /**
+     * This URL is used to get all the products this user has bought.
+     */
+    public static final String USER_PRODUCTS = "/api/v1/user/%s/products";
     /**
      * This URL is used to retrieve a list of categories.
      */

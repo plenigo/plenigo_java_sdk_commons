@@ -1,4 +1,4 @@
-package com.plenigo.sdk.models;
+package com.plenigo.sdk.internal.models;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -10,9 +10,9 @@ import org.junit.Test;
 import java.util.Collections;
 
 /**
- * Tests for {@link MeteredUserData}.
+ * Tests for {@link BaseUserMeteredData}.
  */
-public class MeteredUserDataTest {
+public class BaseMeteredUserDataTest {
     public static final Long FREE_VIEWS_ALLOWED = 0L;
     public static final Long VIEWS_TAKEN = 0L;
     public static final boolean IS_LIMIT_REACHED = true;
@@ -20,11 +20,11 @@ public class MeteredUserDataTest {
     public static final Long LOGIN_FREE_VIEWS_TAKEN = 0L;
     public static final boolean LOGIN_LIMIT_REACHED = true;
     public static final boolean IS_METERED_VIEW_ACTIVATED = true;
-    private MeteredUserData data;
+    private BaseUserMeteredData data;
 
     @Before
     public void setup() {
-        data = new MeteredUserData(IS_METERED_VIEW_ACTIVATED, FREE_VIEWS_ALLOWED, VIEWS_TAKEN, IS_LIMIT_REACHED, LOGIN_FREE_VIEWS_ALLOWED,
+        data = new BaseUserMeteredData(IS_METERED_VIEW_ACTIVATED, FREE_VIEWS_ALLOWED, VIEWS_TAKEN, IS_LIMIT_REACHED, LOGIN_FREE_VIEWS_ALLOWED,
                 LOGIN_FREE_VIEWS_TAKEN, LOGIN_LIMIT_REACHED);
     }
 
