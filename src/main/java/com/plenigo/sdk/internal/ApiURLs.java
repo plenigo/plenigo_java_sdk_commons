@@ -24,7 +24,6 @@ public final class ApiURLs {
     /*
     * Version used for all API URLs from this class.
     * */
-
     private static final String VERSION = "v1";
 
     /**
@@ -35,12 +34,12 @@ public final class ApiURLs {
     /**
      * Default plenigo URL.
      */
-    public static final String DEFAULT_PLENIGO_URL = "https://plenigo.com";
+    public static final String DEFAULT_PLENIGO_URL = "https://api.plenigo.com";
 
     /**
      * OAuth2 plenigo URL.
      */
-    public static final String OAUTH_PLENIGO_URL = "https://api.plenigo.com";
+    public static final String OAUTH_PLENIGO_URL = "https://www.plenigo.com";
 
     /**
      * This URL is used to check if an user has access to a product.
