@@ -187,4 +187,9 @@ public final class ApiResults {
      * Has the end date property.
      */
     public static final String END_DATE = "endDate";
+
+    /**
+     * Result attribute that contains all the uniquely visited articles.
+     */
+    public static final String UNIQUELY_VISITED_SITES = "uniquelyVisitedSites";
 }
