@@ -180,5 +180,5 @@ public final class ApiParams {
     /**
      * Subscription renewal flag on checkout.
      */
-    public static final String SUBSCRIPTION_RENEWAL = "subscriptionRenewal";
+    public static final String SUBSCRIPTION_RENEWAL = "rs";
 }
