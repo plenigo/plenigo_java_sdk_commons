@@ -1,6 +1,5 @@
 package com.plenigo.sdk.internal.util;
 
-import java.util.Calendar;
 import java.util.Date;
 
 /**
