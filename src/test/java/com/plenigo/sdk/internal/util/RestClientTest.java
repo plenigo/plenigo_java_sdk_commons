@@ -288,7 +288,7 @@ public class RestClientTest {
 
     @Test
     public final void testCreateWithEncodedPassword() throws Exception {
-        assertNotNull(new RestClient(""));
+        assertNotNull(new RestClient("test"));
     }
 
     @Test

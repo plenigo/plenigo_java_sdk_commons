@@ -77,6 +77,11 @@ public final class ApiExceptionTranslator {
         getMeteredData.put(String.valueOf(HttpURLConnection.HTTP_BAD_REQUEST), new ApiExceptionInfo(ErrorCode.INVALID_PARAMETERS,
                 new InvalidParametersHandler()));
         errorCodes.put(ApiURLs.USER_VIEW_MOBILE, getMeteredData);
+        Map<String, ApiExceptionInfo> getProductsBought = new LinkedHashMap<String, ApiExceptionInfo>();
+        getProductsBought.put(String.valueOf(HttpURLConnection.HTTP_UNAUTHORIZED), new ApiExceptionInfo(ErrorCode.INVALID_SECRET_OR_COMPANY_ID));
+        getProductsBought.put(String.valueOf(HttpURLConnection.HTTP_BAD_REQUEST), new ApiExceptionInfo(ErrorCode.INVALID_PARAMETERS,
+                new InvalidParametersHandler()));
+        errorCodes.put(ApiURLs.USER_PRODUCTS, getProductsBought);
         LOGGER.log(Level.FINEST, "Registered error codes: {0}", errorCodes);
     }
 

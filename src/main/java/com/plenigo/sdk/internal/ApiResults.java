@@ -167,4 +167,29 @@ public final class ApiResults {
      */
     public static final String LOGIN_LIMIT_REACHED = "limitReachedAfterLogin";
 
+    /**
+     * Has the subscription product list.
+     */
+    public static final String SUBSCRIPTIONS_LIST = "subscriptions";
+
+    /**
+     * Has the single product list.
+     */
+    public static final String SINGLE_PAYMENT_PRODUCT_LIST = "singleProducts";
+
+    /**
+     * Has the buy date property.
+     */
+    public static final String BUY_DATE = "buyDate";
+
+
+    /**
+     * Has the end date property.
+     */
+    public static final String END_DATE = "endDate";
+
+    /**
+     * Result attribute that contains all the uniquely visited articles.
+     */
+    public static final String UNIQUELY_VISITED_SITES = "uniquelyVisitedSites";
 }

@@ -176,4 +176,9 @@ public final class ApiParams {
      * Sends a flag indicating if it wants the metered view status returned.
      */
     public static final String STATUS = "status";
+
+    /**
+     * Subscription renewal flag on checkout.
+     */
+    public static final String SUBSCRIPTION_RENEWAL = "rs";
 }

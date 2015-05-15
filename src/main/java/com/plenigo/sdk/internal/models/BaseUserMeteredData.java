@@ -1,4 +1,4 @@
-package com.plenigo.sdk.models;
+package com.plenigo.sdk.internal.models;
 
 
 import java.io.Serializable;
@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * <strong>Thread safety:</strong> This class is thread safe and can be injected.
  * </p>
  */
-public class MeteredUserData implements Serializable {
+public class BaseUserMeteredData implements Serializable {
     private Boolean isMeteredViewActivated;
     private Long freeViewsAllowed;
     private AtomicLong viewsTaken;
@@ -41,7 +41,7 @@ public class MeteredUserData implements Serializable {
      * @param loginFreeViewsTaken    indicates the amount of views that the user has taken after login
      * @param loginLimitReached      indicates if the limit has been reached after login
      */
-    public MeteredUserData(Boolean isMeteredViewActivated, Long freeViewsAllowed, Long viewsTaken, Boolean isLimitReached, Long loginFreeViewsAllowed
+    public BaseUserMeteredData(Boolean isMeteredViewActivated, Long freeViewsAllowed, Long viewsTaken, Boolean isLimitReached, Long loginFreeViewsAllowed
             , Long loginFreeViewsTaken, Boolean loginLimitReached) {
         this.isMeteredViewActivated = isMeteredViewActivated;
         this.freeViewsAllowed = freeViewsAllowed;
