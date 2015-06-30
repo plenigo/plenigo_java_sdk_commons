@@ -181,4 +181,9 @@ public final class ApiParams {
      * Subscription renewal flag on checkout.
      */
     public static final String SUBSCRIPTION_RENEWAL = "rs";
+
+    /**
+     * Failed payment flag on checkout.
+     */
+    public static final String FAILED_PAYMENT = "fp";
 }
