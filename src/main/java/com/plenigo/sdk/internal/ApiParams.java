@@ -186,4 +186,9 @@ public final class ApiParams {
      * Failed payment flag on checkout.
      */
     public static final String FAILED_PAYMENT = "fp";
+
+    /**
+     * Shipping costs parameter.
+     */
+    public static final String SHIPPING_COST = "sc";
 }
