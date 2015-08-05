@@ -23,7 +23,7 @@ public enum ErrorCode {
     UNKNOWN_HOST("unknown_host"),
     PRODUCT_NOT_FOUND("product_not_found", "The provided product id is not valid"),
     CATEGORY_NOT_FOUND("category_not_found", "The provided category id is not valid"),
-    USER_NOT_LOGGED_IN("user_not_logged_in", "User is not logged in");
+    USER_NOT_LOGGED_IN("user_not_logged_in", "User is not logged in"), SHIPPING_NOT_ALLOWED("shipping_not_allowed","This product type doesn't allow shipping cost!");
 
     private String code;
     private String errorMsg;
