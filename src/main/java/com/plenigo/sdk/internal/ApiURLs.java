@@ -90,7 +90,6 @@ public final class ApiURLs {
      */
     public static final String LIST_CATEGORIES = API_BASE_URL + "/categories";
 
-
     /**
      * This URL is used to retrieve category information.
      */
@@ -106,4 +105,24 @@ public final class ApiURLs {
      * This url is the initial URL for oauth2 authentication.
      */
     public static final String OAUTH_LOGIN = API_BASE_URL + "/oauth2/auth";
+
+    /**
+     * This url is used to request a token from the app management.
+     */
+    public static final String ACCESS_APP_TOKEN = API_BASE_URL + "/access/app/token/%s";
+
+    /**
+     * This url is used to request all the customer apps from the app management.
+     */
+    public static final String ACCESS_APP_CUSTOMER = API_BASE_URL + "/access/app/%s";
+
+    /**
+     * This method verifies if an user has access to a specified product.
+     */
+    public static final String VERIFY_CUSTOMER_APP_PRODUCT = API_BASE_URL + "/access/app/%s/%s/%s";
+
+    /**
+     * This method deletes an app from a customer.
+     */
+    public static final String DELETE_CUSTOMER_APP = API_BASE_URL + "/access/app/%s/%s";
 }
