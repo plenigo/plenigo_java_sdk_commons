@@ -3,12 +3,14 @@ package com.plenigo.sdk.internal.util;
 import com.plenigo.sdk.PlenigoException;
 import com.plenigo.sdk.internal.ErrorCode;
 import com.plenigo.sdk.internal.exceptions.ApiExceptionTranslator;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
@@ -51,6 +53,10 @@ public class RestClient {
      * POST Method.
      */
     private static final String POST_METHOD = "POST";
+    /**
+     * DELETE Method.
+     */
+    private static final String DELETE_METHOD = "DELETE";
 
     /**
      * Http Accept header name.
@@ -201,13 +207,14 @@ public class RestClient {
      */
     @SuppressWarnings("unchecked")
     private Map<String, Object> call(String apiUrl, final String method,
-                                     final String action, final String query) throws PlenigoException {
+                                     final String action, final String query, final Map<String, String> body) throws PlenigoException {
         String restCallInfo = String.format("rest resource call: [apiUrl: %s, method: %s, action: %s]", apiUrl, method
                 , action);
         LOGGER.log(Level.INFO, "Doing a " + restCallInfo);
         try {
             HttpURLConnection con = getHttpConnection(apiUrl, action, query);
             con.setRequestMethod(method);
+            addBodyToRequest(con, body);
             return handleResponse(con, action);
         } catch (ConnectException e) {
             throw new PlenigoException(ErrorCode.CONNECTION_ERROR, restCallInfo + " had a connection error", e);
@@ -218,6 +225,18 @@ public class RestClient {
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, restCallInfo + " had an unexpected error", e);
             throw new PlenigoException(ErrorCode.SERVER, ErrorCode.SERVER.getMsg(), e);
+        }
+    }
+
+    private void addBodyToRequest(HttpURLConnection con, Map<String, String> body) throws IOException {
+        if (body != null) {
+            con.setRequestProperty("Content-Type", "application/json");
+            con.setDoOutput(true);
+            byte[] outputInBytes = new JSONObject(body).toJSONString().getBytes(Charset.DEFAULT);
+            OutputStream os = con.getOutputStream();
+            os.write(outputInBytes);
+            os.flush();
+            os.close();
         }
     }
 
@@ -323,7 +342,7 @@ public class RestClient {
      */
     public Map<String, Object> get(String apiUrl, String resource,
                                    String query) throws PlenigoException {
-        return call(apiUrl, GET_METHOD, resource, query);
+        return call(apiUrl, GET_METHOD, resource, query, null);
     }
 
 
@@ -340,6 +359,39 @@ public class RestClient {
      */
     public Map<String, Object> post(String apiUrl, String resource,
                                     String query) throws PlenigoException {
-        return call(apiUrl, POST_METHOD, resource, query);
+        return call(apiUrl, POST_METHOD, resource, query, null);
+    }
+
+    /**
+     * This does a POST HTTP call and accepts a body to be sent as a json object.
+     *
+     * @param apiUrl   The base API url
+     * @param resource The resource to call
+     * @param query    The query string to use
+     * @param body    The query string to use
+     *
+     * @return The map result of the call
+     *
+     * @throws com.plenigo.sdk.PlenigoException whenever an error happens
+     */
+    public Map<String, Object> post(String apiUrl, String resource,
+                                    String query, Map<String, String> body) throws PlenigoException {
+        return call(apiUrl, POST_METHOD, resource, query, body);
+    }
+
+    /**
+     * This does a DELETE HTTP call.
+     *
+     * @param apiUrl   The base API url
+     * @param resource The resource to call
+     * @param query    The query string to use
+     *
+     * @return The map result of the call
+     *
+     * @throws com.plenigo.sdk.PlenigoException whenever an error happens
+     */
+    public Map<String, Object> delete(String apiUrl, String resource,
+                                    String query) throws PlenigoException {
+        return call(apiUrl, DELETE_METHOD, resource, query, null);
     }
 }

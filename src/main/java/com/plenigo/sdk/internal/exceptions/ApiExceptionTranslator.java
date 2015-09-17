@@ -82,6 +82,20 @@ public final class ApiExceptionTranslator {
         getProductsBought.put(String.valueOf(HttpURLConnection.HTTP_BAD_REQUEST), new ApiExceptionInfo(ErrorCode.INVALID_PARAMETERS,
                 new InvalidParametersHandler()));
         errorCodes.put(ApiURLs.USER_PRODUCTS, getProductsBought);
+        Map<String, ApiExceptionInfo> accessAppCustomer = new LinkedHashMap<String, ApiExceptionInfo>();
+        accessAppCustomer.put(String.valueOf(HttpURLConnection.HTTP_UNAUTHORIZED), new ApiExceptionInfo(ErrorCode.INVALID_SECRET_OR_COMPANY_ID));
+        accessAppCustomer.put(String.valueOf(HttpURLConnection.HTTP_BAD_REQUEST), new ApiExceptionInfo(ErrorCode.INVALID_PARAMETERS,
+                new InvalidParametersHandler()));
+        accessAppCustomer.put(String.valueOf(HttpURLConnection.HTTP_NO_CONTENT), new ApiExceptionInfo(ErrorCode.PRODUCT_ACCESS_ALLOWED));
+        accessAppCustomer.put(String.valueOf(HttpURLConnection.HTTP_FORBIDDEN), new ApiExceptionInfo(ErrorCode.CANNOT_ACCESS_PRODUCT));
+        errorCodes.put(ApiURLs.ACCESS_APP_CUSTOMER, accessAppCustomer);
+        Map<String, ApiExceptionInfo> deleteCustomerApp = new LinkedHashMap<String, ApiExceptionInfo>();
+        deleteCustomerApp.put(String.valueOf(HttpURLConnection.HTTP_UNAUTHORIZED), new ApiExceptionInfo(ErrorCode.INVALID_SECRET_OR_COMPANY_ID));
+        deleteCustomerApp.put(String.valueOf(HttpURLConnection.HTTP_BAD_REQUEST), new ApiExceptionInfo(ErrorCode.INVALID_PARAMETERS,
+                new InvalidParametersHandler()));
+        deleteCustomerApp.put(String.valueOf(HttpURLConnection.HTTP_NO_CONTENT), new ApiExceptionInfo(ErrorCode.APP_ID_DELETED));
+        errorCodes.put(ApiURLs.DELETE_CUSTOMER_APP, deleteCustomerApp);
+
         LOGGER.log(Level.FINEST, "Registered error codes: {0}", errorCodes);
     }
 

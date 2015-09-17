@@ -191,4 +191,29 @@ public final class ApiParams {
      * Shipping costs parameter.
      */
     public static final String SHIPPING_COST = "sc";
+
+    /**
+     * Description parameter.
+     */
+    public static final String DESCRIPTION = "description";
+
+    /**
+     * App Access token parameter.
+     */
+    public static final String APP_ACCESS_TOKEN = "accessToken";
+
+
+    /**
+     * App Access token parameter.
+     */
+    public static final String CUSTOMER_APP_ID = "customerAppId";
 }
+
+/*
+* {
+  "companyId": "h7evZBaXvhaLVHYRue7X",
+  "secret": "AMXzF7qJ9y0uuz2IawRIk6ZMLVeYKq9yXh7lURXQ",
+  "testMode": false,
+  "accessToken": "8070046799"
+}
+* */
