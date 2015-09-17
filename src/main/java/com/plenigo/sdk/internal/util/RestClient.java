@@ -228,6 +228,14 @@ public class RestClient {
         }
     }
 
+    /**
+     * Adds the body map as a json object to the http request.
+     *
+     * @param con  the http connection
+     * @param body the body information
+     *
+     * @throws IOException if a write error occurs
+     */
     private void addBodyToRequest(HttpURLConnection con, Map<String, String> body) throws IOException {
         if (body != null) {
             con.setRequestProperty("Content-Type", "application/json");
@@ -368,7 +376,7 @@ public class RestClient {
      * @param apiUrl   The base API url
      * @param resource The resource to call
      * @param query    The query string to use
-     * @param body    The query string to use
+     * @param body     The query string to use
      *
      * @return The map result of the call
      *
@@ -391,7 +399,7 @@ public class RestClient {
      * @throws com.plenigo.sdk.PlenigoException whenever an error happens
      */
     public Map<String, Object> delete(String apiUrl, String resource,
-                                    String query) throws PlenigoException {
+                                      String query) throws PlenigoException {
         return call(apiUrl, DELETE_METHOD, resource, query, null);
     }
 }
