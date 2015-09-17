@@ -192,4 +192,26 @@ public final class ApiResults {
      * Result attribute that contains all the uniquely visited articles.
      */
     public static final String UNIQUELY_VISITED_SITES = "uniquelyVisitedSites";
+
+    /**
+     * Result attribute that contains the application token for app management.
+     */
+    public static final String APP_TOKEN = "token";
+
+
+    /**
+     * The customer id variable for app management response.
+     */
+    public static final String CUST_ID = "customerId";
+
+    /**
+     * The app list variable for app management response.
+     */
+    public static final String APP_LIST = "apps";
+
+    /**
+     * The customer app id variable for app management response.
+     */
+    public static final String CUSTOMER_APP_ID = "customerAppId";
+
 }

@@ -18,6 +18,7 @@ import java.io.OutputStream;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.UnknownHostException;
+import java.util.Collections;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
@@ -282,6 +283,33 @@ public class RestClientTest {
         HttpURLConnection connection = mockOkConnection(client);
         Mockito.when(connection.getOutputStream()).thenReturn(Mockito.mock(OutputStream.class));
         Map<String, Object> result = client.post(url,
+                JSON_ASPX, QUERY_SUSHI_SOURCES_WEB);
+        assertNotNull(result);
+    }
+
+
+    /**
+     * This tests a successful POST HTTP call with a body.
+     */
+    @Test
+    public final void testSuccessfulPostWithBody() throws Exception {
+        RestClient client = PowerMockito.spy(new RestClient());
+        HttpURLConnection connection = mockOkConnection(client);
+        Mockito.when(connection.getOutputStream()).thenReturn(Mockito.mock(OutputStream.class));
+        Map<String, Object> result = client.post(url,
+                JSON_ASPX, QUERY_SUSHI_SOURCES_WEB, Collections.EMPTY_MAP);
+        assertNotNull(result);
+    }
+
+    /**
+     * This tests a successful POST HTTP call with a body.
+     */
+    @Test
+    public final void testSuccessfulDelete() throws Exception {
+        RestClient client = PowerMockito.spy(new RestClient());
+        HttpURLConnection connection = mockOkConnection(client);
+        Mockito.when(connection.getOutputStream()).thenReturn(Mockito.mock(OutputStream.class));
+        Map<String, Object> result = client.delete(url,
                 JSON_ASPX, QUERY_SUSHI_SOURCES_WEB);
         assertNotNull(result);
     }
