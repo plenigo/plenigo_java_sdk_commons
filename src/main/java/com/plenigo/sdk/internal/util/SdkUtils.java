@@ -461,7 +461,10 @@ public final class SdkUtils {
      * @return The corresponding value
      */
     public static String getValueIfNotNull(Map<String, Object> map, String key) {
-        Object value = map.get(key);
+        Object value = null;
+        if(map != null) {
+            value = map.get(key);
+        }
         if (value == null) {
             return "";
         }

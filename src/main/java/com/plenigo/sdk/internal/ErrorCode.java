@@ -26,7 +26,8 @@ public enum ErrorCode {
     USER_NOT_LOGGED_IN("user_not_logged_in", "User is not logged in"),
     SHIPPING_NOT_ALLOWED("shipping_not_allowed","This product type doesn't allow shipping cost!"),
     PRODUCT_ACCESS_ALLOWED("product_access_allowed","This user has access to this product"),
-    APP_ID_DELETED("app_id_deleted","The app id was deleted");
+    APP_ID_DELETED("app_id_deleted","The app id was deleted"),
+    INCORRECT_MOBILE_SECRET("incorrect_mobile_secret","The mobile secret or the customer id is incorrect");
 
     private String code;
     private String errorMsg;

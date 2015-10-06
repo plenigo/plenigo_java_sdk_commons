@@ -125,4 +125,15 @@ public final class ApiURLs {
      * This method deletes an app from a customer.
      */
     public static final String DELETE_CUSTOMER_APP = API_BASE_URL + "/access/app/%s/%s";
+
+
+    /**
+     * This URL is used to verify if mobile app has access to certain customer
+     */
+    public static final String MOBILE_SECRET_VERIFY = API_BASE_URL + "/access/mobileSecret/verify";
+
+    /**
+     * This URL is used to get, create or delete mobile secret data
+     */
+    public static final String MOBILE_SECRET_URL = "/api/v1/access/mobileSecret/%s";
 }
