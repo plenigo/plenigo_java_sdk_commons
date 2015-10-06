@@ -214,4 +214,9 @@ public final class ApiResults {
      */
     public static final String CUSTOMER_APP_ID = "customerAppId";
 
+    /**
+     * the mobile app secret variable.
+     */
+    public static final String MOBILE_APP_SECRET = "mobileAppSecret";
+
 }

@@ -161,7 +161,6 @@ public final class ApiParams {
      */
     public static final String CATEGORY_ID = "ci";
 
-
     /**
      * unique mobile's device id.
      */
@@ -207,13 +206,19 @@ public final class ApiParams {
      * App Access token parameter.
      */
     public static final String CUSTOMER_APP_ID = "customerAppId";
-}
 
-/*
-* {
-  "companyId": "h7evZBaXvhaLVHYRue7X",
-  "secret": "AMXzF7qJ9y0uuz2IawRIk6ZMLVeYKq9yXh7lURXQ",
-  "testMode": false,
-  "accessToken": "8070046799"
+    /**
+     * Email parameter.
+     */
+    public static final String EMAIL = "email";
+
+    /**
+     * Mobile Secret parameter.
+     */
+    public static final String MOBILE_SECRET = "mobileSecret";
+
+    /**
+     * Mobile Secret size parameter.
+     */
+    public static final String MOBILE_SECRET_SIZE = "size";
 }
-* */

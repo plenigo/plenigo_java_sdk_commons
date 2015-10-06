@@ -265,7 +265,7 @@ public class RestClient {
         InputStream in = null;
         try {
             LOGGER.log(Level.FINEST, "HTTP Response for resource {0}: {1}", new Object[]{resource, con.getResponseCode()});
-            if (HttpURLConnection.HTTP_OK == con.getResponseCode()) {
+            if (con.getResponseCode() >= 200 && con.getResponseCode() <= 300) {
                 in = con.getInputStream();
                 try {
                     json = SdkUtils.
