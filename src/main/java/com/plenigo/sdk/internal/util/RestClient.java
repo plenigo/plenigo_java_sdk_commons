@@ -81,6 +81,8 @@ public class RestClient {
      * query string.
      */
     public static final String QUESTION_MARK = "?";
+    public static final int INITIAL_CORRECT_STATUS_CODE = 200;
+    public static final int FINAL_CORRECT_STATUS_CODE = 300;
 
     /**
      * Default headers used in every request.
@@ -196,10 +198,12 @@ public class RestClient {
      * This method does a HTTP request and reads the response as a JSON object
      * and puts it into a {@link java.util.Map}.
      *
-     * @param apiUrl The URL of the method call
-     * @param method The method to call e.g. (GET or POST)
-     * @param action The action to call
-     * @param query  The query string to use
+     * @param apiUrl  The URL of the method call
+     * @param method  The method to call e.g. (GET or POST)
+     * @param action  The action to call
+     * @param query   The query string to use
+     * @param body    the json body to send
+     * @param headers the headers to send
      *
      * @return map of JSON based results
      *
@@ -207,12 +211,13 @@ public class RestClient {
      */
     @SuppressWarnings("unchecked")
     private Map<String, Object> call(String apiUrl, final String method,
-                                     final String action, final String query, final Map<String, String> body) throws PlenigoException {
+                                     final String action, final String query, final Map<String, String> body, final Map<String, String> headers)
+            throws PlenigoException {
         String restCallInfo = String.format("rest resource call: [apiUrl: %s, method: %s, action: %s]", apiUrl, method
                 , action);
         LOGGER.log(Level.INFO, "Doing a " + restCallInfo);
         try {
-            HttpURLConnection con = getHttpConnection(apiUrl, action, query);
+            HttpURLConnection con = getHttpConnection(apiUrl, action, query, headers);
             con.setRequestMethod(method);
             addBodyToRequest(con, body);
             return handleResponse(con, action);
@@ -232,7 +237,7 @@ public class RestClient {
      * Adds the body map as a json object to the http request.
      *
      * @param con  the http connection
-     * @param body the body information
+     * @param body the json body to send
      *
      * @throws IOException if a write error occurs
      */
@@ -265,7 +270,7 @@ public class RestClient {
         InputStream in = null;
         try {
             LOGGER.log(Level.FINEST, "HTTP Response for resource {0}: {1}", new Object[]{resource, con.getResponseCode()});
-            if (con.getResponseCode() >= 200 && con.getResponseCode() <= 300) {
+            if (con.getResponseCode() >= INITIAL_CORRECT_STATUS_CODE && con.getResponseCode() <= FINAL_CORRECT_STATUS_CODE) {
                 in = con.getInputStream();
                 try {
                     json = SdkUtils.
@@ -305,16 +310,17 @@ public class RestClient {
      * Creates a HTTP connection with the base URL, the action
      * that wants to be called and the query string if any.
      *
-     * @param apiUrl The API url to be queried
-     * @param action action to be used
-     * @param query  query string
+     * @param apiUrl  The API url to be queried
+     * @param action  action to be used
+     * @param query   query string
+     * @param headers the headers to send
      *
      * @return {@link java.net.HttpURLConnection}
      *
      * @throws java.io.IOException When there is a read/write error
      */
     private HttpURLConnection getHttpConnection(String apiUrl, String action,
-                                                String query) throws IOException {
+                                                String query, Map<String, String> headers) throws IOException {
         if (apiUrl == null || apiUrl.isEmpty()) {
             LOGGER.log(Level.FINEST, "There api url is null or empty, not doing Http Request");
             return null;
@@ -334,7 +340,23 @@ public class RestClient {
                 con.setRequestProperty(header.getKey(), header.getValue());
             }
         }
+        addHeadersToRequest(con, defaultHeaders);
+        addHeadersToRequest(con, headers);
         return con;
+    }
+
+    /**
+     * Adds the headers to teh http request.
+     *
+     * @param con     the connection to use
+     * @param headers headers to add
+     */
+    private void addHeadersToRequest(HttpURLConnection con, Map<String, String> headers) {
+        if (headers != null && !headers.isEmpty()) {
+            for (Map.Entry<String, String> header : headers.entrySet()) {
+                con.setRequestProperty(header.getKey(), header.getValue());
+            }
+        }
     }
 
     /**
@@ -343,31 +365,15 @@ public class RestClient {
      * @param apiUrl   The base API url
      * @param resource The resource to call
      * @param query    The query string to use
+     * @param headers  the headers to send
      *
      * @return The map result of the call
      *
      * @throws com.plenigo.sdk.PlenigoException whenever an error happens
      */
     public Map<String, Object> get(String apiUrl, String resource,
-                                   String query) throws PlenigoException {
-        return call(apiUrl, GET_METHOD, resource, query, null);
-    }
-
-
-    /**
-     * This does a GET HTTP call.
-     *
-     * @param apiUrl   The base API url
-     * @param resource The resource to call
-     * @param query    The query string to use
-     *
-     * @return The map result of the call
-     *
-     * @throws com.plenigo.sdk.PlenigoException whenever an error happens
-     */
-    public Map<String, Object> post(String apiUrl, String resource,
-                                    String query) throws PlenigoException {
-        return call(apiUrl, POST_METHOD, resource, query, null);
+                                   String query, Map<String, String> headers) throws PlenigoException {
+        return call(apiUrl, GET_METHOD, resource, query, null, headers);
     }
 
     /**
@@ -377,14 +383,15 @@ public class RestClient {
      * @param resource The resource to call
      * @param query    The query string to use
      * @param body     The query string to use
+     * @param headers  the headers to send
      *
      * @return The map result of the call
      *
      * @throws com.plenigo.sdk.PlenigoException whenever an error happens
      */
     public Map<String, Object> post(String apiUrl, String resource,
-                                    String query, Map<String, String> body) throws PlenigoException {
-        return call(apiUrl, POST_METHOD, resource, query, body);
+                                    String query, Map<String, String> body, Map<String, String> headers) throws PlenigoException {
+        return call(apiUrl, POST_METHOD, resource, query, body, headers);
     }
 
     /**
@@ -393,13 +400,14 @@ public class RestClient {
      * @param apiUrl   The base API url
      * @param resource The resource to call
      * @param query    The query string to use
+     * @param headers  the headers to send
      *
      * @return The map result of the call
      *
      * @throws com.plenigo.sdk.PlenigoException whenever an error happens
      */
     public Map<String, Object> delete(String apiUrl, String resource,
-                                      String query) throws PlenigoException {
-        return call(apiUrl, DELETE_METHOD, resource, query, null);
+                                      String query, Map<String, String> headers) throws PlenigoException {
+        return call(apiUrl, DELETE_METHOD, resource, query, null, headers);
     }
 }

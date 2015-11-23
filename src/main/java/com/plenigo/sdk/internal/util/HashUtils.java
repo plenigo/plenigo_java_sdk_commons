@@ -32,7 +32,7 @@ public final class HashUtils {
     /**
      * Hash algorithm for HMAC and SHA512.
      */
-    private static final String HMAC_ALGORITHM = "HmacSHA512";
+    private static final String HMAC_ALGORITHM = "HmacSHA256";
 
     /**
      * Default constructor.
@@ -76,10 +76,10 @@ public final class HashUtils {
     public static String calculateHMAC(String data, String secret) throws PlenigoException {
         try {
             Mac sha512HMAC = Mac.getInstance(HMAC_ALGORITHM);
-            SecretKeySpec secretKey = new SecretKeySpec(secret.getBytes(Charset.UTF8), HMAC_ALGORITHM);
+            SecretKeySpec secretKey = new SecretKeySpec(secret.getBytes(Charset.DEFAULT), HMAC_ALGORITHM);
             sha512HMAC.init(secretKey);
-            byte[] checksum = sha512HMAC.doFinal(data.getBytes(Charset.UTF8));
-            return HexUtils.encodeHexString(checksum);
+            byte[] checksum = sha512HMAC.doFinal(data.getBytes(Charset.DEFAULT));
+            return Base64Util.encodeUrlSafe(checksum);
         } catch (NoSuchAlgorithmException e) {
             throw new PlenigoException(ErrorCode.CRYPTOGRAPHY_ERROR, e.getMessage(), e);
         } catch (InvalidKeyException e) {

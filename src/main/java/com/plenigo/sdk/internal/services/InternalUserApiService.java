@@ -7,6 +7,7 @@ import com.plenigo.sdk.internal.ApiURLs;
 import com.plenigo.sdk.internal.ErrorCode;
 import com.plenigo.sdk.internal.models.Address;
 import com.plenigo.sdk.internal.util.HttpConfig;
+import com.plenigo.sdk.internal.util.JWT;
 import com.plenigo.sdk.internal.util.SdkUtils;
 import com.plenigo.sdk.models.UserData;
 
@@ -50,13 +51,12 @@ public class InternalUserApiService {
         Map<String, Object> params = new HashMap<String, Object>();
         //The checksum expects the parameters in this order:
         //"COMPANY_ID&USER_ID&RESOURCE_ID&TEST_MODE"
-        params.put(ApiParams.SECRET, secret);
         params.put(ApiParams.CUSTOMER_ID, customerId);
         params.put(ApiParams.PRODUCT_ID, productIds);
-        params.put(ApiParams.COMPANY_ID, companyId);
         params.put(ApiParams.TEST_MODE, testMode);
         try {
-            HttpConfig.get().getClient().get(baseUrl, ApiURLs.USER_PRODUCT_ACCESS, SdkUtils.buildUrlQueryString(params));
+            HttpConfig.get().getClient().get(baseUrl, ApiURLs.USER_PRODUCT_ACCESS, SdkUtils.buildUrlQueryString(params)
+                    , JWT.generateJWTTokenHeader(companyId, secret));
         } catch (PlenigoException pe) {
             //Forbidden means that the user has not bought the product.
             if (ErrorCode.get(pe.getResponseCode()) == ErrorCode.CANNOT_ACCESS_PRODUCT) {
@@ -80,10 +80,7 @@ public class InternalUserApiService {
      * @throws PlenigoException if any error happens
      */
     public boolean isPaywallEnabled(String baseUrl, String secret, String companyId) throws PlenigoException {
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put(ApiParams.SECRET, secret);
-        params.put(ApiParams.COMPANY_ID, companyId);
-        Map<String, Object> objectMap = HttpConfig.get().getClient().get(baseUrl, ApiURLs.PAYWALL_STATE, SdkUtils.buildUrlQueryString(params));
+        Map<String, Object> objectMap = HttpConfig.get().getClient().get(baseUrl, ApiURLs.PAYWALL_STATE, null, JWT.generateJWTTokenHeader(companyId, secret));
         Object paywallState = objectMap.get(ApiResults.PAYWALL_STATE);
         boolean isEnabled = false;
         if (paywallState != null) {
@@ -107,11 +104,10 @@ public class InternalUserApiService {
      */
     public UserData getUserData(String url, String companyId, String secret, String accessToken) throws PlenigoException {
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put(ApiParams.COMPANY_ID, companyId);
-        params.put(ApiParams.SECRET, secret);
         params.put(ApiParams.ACCESS_TOKEN, accessToken);
         LOGGER.log(Level.FINEST, "Seeking user information for company: {0}", params.get(ApiParams.COMPANY_ID));
-        Map<String, Object> response = HttpConfig.get().getClient().get(url, ApiURLs.USER_PROFILE, SdkUtils.buildUrlQueryString(params));
+        Map<String, Object> response = HttpConfig.get().getClient().get(url, ApiURLs.USER_PROFILE, SdkUtils.buildUrlQueryString(params)
+                , JWT.generateJWTTokenHeader(companyId, secret));
         UserData userData;
         if (response.containsKey(ApiResults.ERROR)) {
             throw new PlenigoException(response.get(ApiResults.ERROR).toString(), response.get(ApiResults.DESCRIPTION).toString());
