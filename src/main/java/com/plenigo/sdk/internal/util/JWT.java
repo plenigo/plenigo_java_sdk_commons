@@ -2,7 +2,6 @@ package com.plenigo.sdk.internal.util;
 
 import com.plenigo.sdk.PlenigoException;
 import org.json.simple.JSONValue;
-
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -26,7 +25,6 @@ public final class JWT {
     private static final int DEFAULT_EXPIRATION_TIME = (60 * 5);
     public static final int MILLIS_IN_A_SECOND = 1000;
     private static int expirationTime = DEFAULT_EXPIRATION_TIME;
-
 
     /**
      * Private utility constructor.

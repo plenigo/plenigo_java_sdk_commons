@@ -105,6 +105,7 @@ public class InternalUserApiService {
     public UserData getUserData(String url, String companyId, String secret, String accessToken) throws PlenigoException {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put(ApiParams.ACCESS_TOKEN, accessToken);
+        params.put(ApiParams.COMPANY_ID, companyId);
         LOGGER.log(Level.FINEST, "Seeking user information for company: {0}", params.get(ApiParams.COMPANY_ID));
         Map<String, Object> response = HttpConfig.get().getClient().get(url, ApiURLs.USER_PROFILE, SdkUtils.buildUrlQueryString(params)
                 , JWT.generateJWTTokenHeader(companyId, secret));

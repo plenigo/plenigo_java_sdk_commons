@@ -46,7 +46,7 @@ public final class Base64Util {
                     encode[i] = '_';
                 }
             }
-            return new String(encode);
+            return new String(encode, Charset.DEFAULT);
         } catch (Exception e) {
             throw new PlenigoException("An error occured while encoding the data", e);
         }

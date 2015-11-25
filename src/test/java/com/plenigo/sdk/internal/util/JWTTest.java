@@ -2,7 +2,6 @@ package com.plenigo.sdk.internal.util;
 
 import com.plenigo.sdk.PlenigoException;
 import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 
 
