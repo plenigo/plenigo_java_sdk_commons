@@ -304,6 +304,16 @@ public class RestClientTest {
     }
 
     @Test
+    public final void testSuccessfulPostWithBodyAndHeader() throws Exception {
+        RestClient client = PowerMockito.spy(new RestClient("sampleUserNameAndPassword"));
+        HttpURLConnection connection = mockOkConnection(client);
+        Mockito.when(connection.getOutputStream()).thenReturn(Mockito.mock(OutputStream.class));
+        Map<String, Object> result = client.post(url,
+                JSON_ASPX, QUERY_SUSHI_SOURCES_WEB, Collections.EMPTY_MAP, Collections.singletonMap("header", "value"));
+        assertNotNull(result);
+    }
+
+    @Test
     public final void testCreateWithEncodedPassword() throws Exception {
         assertNotNull(new RestClient("test"));
     }

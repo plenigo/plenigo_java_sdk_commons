@@ -7,6 +7,8 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -30,6 +32,14 @@ public class SdkUtilsTest {
      * The number 5 constant.
      */
     private static final int FIVE = 5;
+
+    @Test
+    public void testConstructorIsPrivate() throws Exception {
+        Constructor constructor = SdkUtils.class.getDeclaredConstructor();
+        assertTrue(Modifier.isPrivate(constructor.getModifiers()));
+        constructor.setAccessible(true);
+        constructor.newInstance();
+    }
 
     /**
      * Tests the {@link SdkUtils#getStringFromMap(java.util.Map)} method with valid

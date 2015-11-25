@@ -317,26 +317,6 @@ public final class SdkUtils {
         return output;
     }
 
-
-    /**
-     * Returns the value if it exists, otherwise it returns null.
-     *
-     * @param value       The value to convert
-     * @param outputClass The output class
-     * @param <O>         type of the output class
-     *
-     * @return The output class value
-     *
-     * @throws PlenigoException If a conversion error occurs
-     */
-    public static <O> O getValueIfExistsOrNull(Object value, Class<O> outputClass) throws PlenigoException {
-        if (value == null) {
-            return null;
-        }
-        String val = value.toString();
-        return convert(outputClass, val);
-    }
-
     /**
      * Returns a conversion error msg.
      *
@@ -462,7 +442,7 @@ public final class SdkUtils {
      */
     public static String getValueIfNotNull(Map<String, Object> map, String key) {
         Object value = null;
-        if(map != null) {
+        if (map != null) {
             value = map.get(key);
         }
         if (value == null) {
