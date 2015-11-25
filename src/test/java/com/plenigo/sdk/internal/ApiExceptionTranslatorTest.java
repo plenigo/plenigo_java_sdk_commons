@@ -23,5 +23,13 @@ public class ApiExceptionTranslatorTest {
         assertNotNull(ex.getMessage());
     }
 
+    @Test
+    public void testErrorCodeWithoutHandlerSuccesfulCase() {
+        String apiUrl = ApiURLs.USER_PRODUCT_ACCESS;
+        PlenigoException ex = ApiExceptionTranslator.get().translate("403", apiUrl, null);
+        assertNotNull(ex);
+        assertNotNull(ex.getResponseCode());
+        assertNotNull(ex.getMessage());
+    }
 
 }

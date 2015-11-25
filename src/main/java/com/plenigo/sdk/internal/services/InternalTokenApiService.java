@@ -6,6 +6,7 @@ import com.plenigo.sdk.internal.ApiResults;
 import com.plenigo.sdk.internal.ApiURLs;
 import com.plenigo.sdk.internal.util.EncryptionUtils;
 import com.plenigo.sdk.internal.util.HttpConfig;
+import com.plenigo.sdk.internal.util.JWT;
 import com.plenigo.sdk.internal.util.SdkUtils;
 import com.plenigo.sdk.models.AccessTokenRequest;
 import com.plenigo.sdk.models.RefreshTokenRequest;
@@ -55,11 +56,9 @@ public class InternalTokenApiService {
         params.put(ApiParams.TOKEN_GRANT_TYPE, TokenGrantType.AUTHORIZATION_CODE.getName());
         params.put(ApiParams.OAUTH_ACCESS_CODE, request.getCode());
         params.put(ApiParams.REDIRECT_URI, request.getRedirectUri());
-        params.put(ApiParams.CLIENT_ID, companyId);
-        params.put(ApiParams.CLIENT_SECRET, secret);
         SdkUtils.addIfNotNull(params, ApiParams.STATE, request.getCsrfToken());
         Map<String, Object> result = HttpConfig.get().getClient().post(url, ApiURLs.GET_ACCESS_TOKEN,
-                SdkUtils.buildUrlQueryString(params));
+                SdkUtils.buildUrlQueryString(params), null, JWT.generateJWTTokenHeader(companyId, secret));
         return validateAndBuildResponse(request.getCsrfToken(), result);
     }
 
@@ -81,11 +80,9 @@ public class InternalTokenApiService {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put(ApiParams.TOKEN_GRANT_TYPE, TokenGrantType.REFRESH_TOKEN.getName());
         params.put(ApiParams.REFRESH_TOKEN, request.getRefreshToken());
-        params.put(ApiParams.CLIENT_ID, companyId);
-        params.put(ApiParams.CLIENT_SECRET, secret);
         SdkUtils.addIfNotNull(params, ApiParams.STATE, request.getCsrfToken());
         Map<String, Object> result = HttpConfig.get().getClient().post(url, ApiURLs.REFRESH_ACCESS_TOKEN
-                , SdkUtils.buildUrlQueryString(params));
+                , SdkUtils.buildUrlQueryString(params), null, JWT.generateJWTTokenHeader(companyId, secret));
         result.put(ApiResults.REFRESH_TOKEN, request.getRefreshToken());
         return validateAndBuildResponse(request.getCsrfToken(), result);
     }

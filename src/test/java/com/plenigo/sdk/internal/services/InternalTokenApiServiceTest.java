@@ -3,6 +3,7 @@ package com.plenigo.sdk.internal.services;
 
 import com.plenigo.sdk.PlenigoException;
 import com.plenigo.sdk.internal.ApiResults;
+import com.plenigo.sdk.internal.util.HashUtils;
 import com.plenigo.sdk.internal.util.HttpConfig;
 import com.plenigo.sdk.internal.util.RestClient;
 import com.plenigo.sdk.models.AccessTokenRequest;
@@ -31,10 +32,10 @@ import static org.powermock.api.support.SuppressCode.suppressConstructor;
  */
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({HttpConfig.class})
+@PrepareForTest({HttpConfig.class, HashUtils.class})
 public class InternalTokenApiServiceTest {
-    public static final String COMPANY_ID = "companyId";
-    public static final String SECRET = "secret";
+    public static final String COMPANY_ID = "h7evZBaXvhaLVHYRTIHD";
+    public static final String SECRET = "AMXzF7qJ9y0uuz2IawRIk6ZMLVeYKq9yXh7lURXQ";
     public static final String URL = "url";
     private InternalTokenApiService internalTokenApiService = new InternalTokenApiService();
     private RestClient restClient;
@@ -42,7 +43,9 @@ public class InternalTokenApiServiceTest {
     @Before
     public void setup() {
         suppressConstructor(HttpConfig.class);
+        suppressConstructor(HashUtils.class);
         mockStatic(HttpConfig.class);
+        mockStatic(HashUtils.class);
         HttpConfig httpConfig = PowerMockito.mock(HttpConfig.class);
         PowerMockito.when(HttpConfig.get()).thenReturn(httpConfig);
         restClient = Mockito.mock(RestClient.class);
@@ -57,7 +60,7 @@ public class InternalTokenApiServiceTest {
         map.put(ApiResults.STATE, "12345");
         map.put(ApiResults.ACCESS_TOKEN, "1");
         map.put(ApiResults.EXPIRES_IN, 3600L);
-        Mockito.when(restClient.post(Mockito.anyString(), Mockito.anyString(), Mockito.anyString()))
+        Mockito.when(restClient.post(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyMap(), Mockito.anyMap()))
                 .thenReturn(map);
         AccessTokenRequest request = new AccessTokenRequest("1234",URL);
         TokenData tokenData = internalTokenApiService.getAccessToken(COMPANY_ID, SECRET, URL, request);
@@ -74,7 +77,7 @@ public class InternalTokenApiServiceTest {
         map.put(ApiResults.STATE, "12345");
         map.put(ApiResults.ACCESS_TOKEN, "1");
         map.put(ApiResults.EXPIRES_IN, 3600L);
-        Mockito.when(restClient.post(Mockito.anyString(), Mockito.anyString(), Mockito.anyString()))
+        Mockito.when(restClient.post(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyMap(), Mockito.anyMap()))
                 .thenReturn(map);
         RefreshTokenRequest request = new RefreshTokenRequest("1234");
         TokenData tokenData = internalTokenApiService.getNewAccessToken(COMPANY_ID, SECRET, URL, request);
@@ -90,7 +93,7 @@ public class InternalTokenApiServiceTest {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put(ApiResults.ERROR, "1233");
         map.put(ApiResults.ERROR_DESCRIPTION, "ERROR MSG");
-        Mockito.when(restClient.post(Mockito.anyString(), Mockito.anyString(), Mockito.anyString()))
+        Mockito.when(restClient.post(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyMap(), Mockito.anyMap()))
                 .thenReturn(map);
         RefreshTokenRequest request = new RefreshTokenRequest("1234", "12391823");
         internalTokenApiService.getNewAccessToken(COMPANY_ID, SECRET, URL, request);
@@ -104,7 +107,7 @@ public class InternalTokenApiServiceTest {
         map.put(ApiResults.STATE, "123456");
         map.put(ApiResults.ACCESS_TOKEN, "1");
         map.put(ApiResults.EXPIRES_IN, 3600L);
-        Mockito.when(restClient.post(Mockito.anyString(), Mockito.anyString(), Mockito.anyString()))
+        Mockito.when(restClient.post(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyMap(), Mockito.anyMap()))
                 .thenReturn(map);
         RefreshTokenRequest request = new RefreshTokenRequest("1234", "123");
         TokenData tokenData = internalTokenApiService.getNewAccessToken(COMPANY_ID, SECRET, URL, request);

@@ -24,7 +24,7 @@ public final class ApiURLs {
     /*
     * Version used for all API URLs from this class.
     * */
-    private static final String VERSION = "v1";
+    private static final String VERSION = "v2";
 
     /**
      * Base API URL for plenigo service interface.
@@ -84,7 +84,7 @@ public final class ApiURLs {
     /**
      * This URL is used to get all the products this user has bought.
      */
-    public static final String USER_PRODUCTS = "/api/v1/user/%s/products";
+    public static final String USER_PRODUCTS = API_BASE_URL + "/user/%s/products";
     /**
      * This URL is used to retrieve a list of categories.
      */
@@ -128,12 +128,12 @@ public final class ApiURLs {
 
 
     /**
-     * This URL is used to verify if mobile app has access to certain customer
+     * This URL is used to verify if mobile app has access to certain customer.
      */
     public static final String MOBILE_SECRET_VERIFY = API_BASE_URL + "/access/mobileSecret/verify";
 
     /**
-     * This URL is used to get, create or delete mobile secret data
+     * This URL is used to get, create or delete mobile secret data.
      */
-    public static final String MOBILE_SECRET_URL = "/api/v1/access/mobileSecret/%s";
+    public static final String MOBILE_SECRET_URL = API_BASE_URL + "/access/mobileSecret/%s";
 }
