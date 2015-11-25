@@ -2,7 +2,7 @@ package com.plenigo.sdk.internal.util;
 
 import com.plenigo.sdk.PlenigoException;
 import org.json.simple.JSONValue;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -90,10 +90,11 @@ public final class JWT {
     public static Map<String, String> generateJWTTokenHeader(String companyId, String secret) throws PlenigoException {
         String jti = UUID.randomUUID().toString();
         long exp = (System.currentTimeMillis() / MILLIS_IN_A_SECOND) + (expirationTime); //add 5minutes to current time
-        String token = "";
+        Map<String, String> jwtHeader = new HashMap<String, String>();
         if (companyId != null && !companyId.isEmpty() && secret != null && !secret.isEmpty()) {
-            token = generateJWTToken(companyId, secret, jti, exp);
+            String token = generateJWTToken(companyId, secret, jti, exp);
+            jwtHeader.put("plenigoToken", token);
         }
-        return Collections.singletonMap("plenigoToken", token);
+        return jwtHeader;
     }
 }
