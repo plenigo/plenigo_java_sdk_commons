@@ -99,6 +99,13 @@ public final class ApiExceptionTranslator {
                 new InvalidParametersHandler()));
         verifyMobileSecret.put(String.valueOf(HttpURLConnection.HTTP_FORBIDDEN), new ApiExceptionInfo(ErrorCode.INCORRECT_MOBILE_SECRET));
         errorCodes.put(ApiURLs.MOBILE_SECRET_VERIFY, verifyMobileSecret);
+        Map<String, ApiExceptionInfo> registerExternalUser = new LinkedHashMap<String, ApiExceptionInfo>();
+        registerExternalUser.put(String.valueOf(HttpURLConnection.HTTP_UNAUTHORIZED), new ApiExceptionInfo(ErrorCode.INVALID_SECRET_OR_COMPANY_ID));
+        registerExternalUser.put(String.valueOf(HttpURLConnection.HTTP_BAD_REQUEST), new ApiExceptionInfo(ErrorCode.INVALID_PARAMETERS,
+                new InvalidParametersHandler()));
+        registerExternalUser.put(String.valueOf(HttpURLConnection.HTTP_FORBIDDEN), new ApiExceptionInfo(ErrorCode.COMPANY_NOT_QUALIFIED));
+        errorCodes.put(ApiURLs.REGISTER_EXTERNAL_USER_URL, registerExternalUser);
+
 
         LOGGER.log(Level.FINEST, "Registered error codes: {0}", errorCodes);
     }

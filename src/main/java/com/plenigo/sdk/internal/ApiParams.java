@@ -221,4 +221,9 @@ public final class ApiParams {
      * Mobile Secret size parameter.
      */
     public static final String MOBILE_SECRET_SIZE = "size";
+
+    /**
+     * Language parameter.
+     */
+    public static final String LANGUAGE = "language";
 }

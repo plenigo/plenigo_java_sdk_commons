@@ -219,4 +219,9 @@ public final class ApiResults {
      */
     public static final String MOBILE_APP_SECRET = "mobileAppSecret";
 
+    /**
+     * the login token variable.
+     */
+    public static final String LOGIN_TOKEN = "loginToken";
+
 }

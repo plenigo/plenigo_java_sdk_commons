@@ -57,6 +57,10 @@ public class RestClient {
      * DELETE Method.
      */
     private static final String DELETE_METHOD = "DELETE";
+    /**
+     * PUT Method.
+     */
+    private static final String PUT_METHOD = "PUT";
 
     /**
      * Http Accept header name.
@@ -409,5 +413,23 @@ public class RestClient {
     public Map<String, Object> delete(String apiUrl, String resource,
                                       String query, Map<String, String> headers) throws PlenigoException {
         return call(apiUrl, DELETE_METHOD, resource, query, null, headers);
+    }
+
+    /**
+     * This does a PUT HTTP call and accepts a body to be sent as a json object.
+     *
+     * @param apiUrl   The base API url
+     * @param resource The resource to call
+     * @param query    The query string to use
+     * @param body     The query string to use
+     * @param headers  the headers to send
+     *
+     * @return The map result of the call
+     *
+     * @throws com.plenigo.sdk.PlenigoException whenever an error happens
+     */
+    public Map<String, Object> put(String apiUrl, String resource,
+                                    String query, Map<String, String> body, Map<String, String> headers) throws PlenigoException {
+        return call(apiUrl, PUT_METHOD, resource, query, body, headers);
     }
 }

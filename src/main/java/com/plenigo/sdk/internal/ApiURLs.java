@@ -136,4 +136,20 @@ public final class ApiURLs {
      * This URL is used to get, create or delete mobile secret data.
      */
     public static final String MOBILE_SECRET_URL = API_BASE_URL + "/access/mobileSecret/%s";
+
+    /**
+     * This URL is used to register an external user.
+     */
+    public static final String REGISTER_EXTERNAL_USER_URL = API_BASE_URL + "/externalUser/register";
+
+    /**
+     * This URL is used to change an external users email.
+     */
+    public static final String EXTERNAL_USER_EMAIL_CHANGE_URL = API_BASE_URL + "/externalUser/%s/changeEmail";
+
+    /**
+     * This URL is used to create a login token.
+     */
+    public static final String EXTERNAL_USER_CREATE_LOGIN_TOKEN_URL = API_BASE_URL + "/externalUser/%s/createLoginToken";
+
 }
