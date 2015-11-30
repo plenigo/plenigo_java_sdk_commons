@@ -101,7 +101,7 @@ public class RestClient {
     /**
      * Connection timeout used by the client instance.
      *
-     * @return the connectionTimeout
+     * @return The connectionTimeout
      */
     public int getConnectionTimeout() {
         return connectionTimeout;
@@ -119,14 +119,14 @@ public class RestClient {
     /**
      * Returns the read timeout used by the client.
      *
-     * @return the readTimeout
+     * @return The readTimeout
      */
     public int getReadTimeout() {
         return readTimeout;
     }
 
     /**
-     * @param milliseconds the milliseconds to set
+     * @param milliseconds The milliseconds to set
      */
     public void setReadTimeout(final int milliseconds) {
         this.readTimeout = milliseconds;
@@ -153,7 +153,7 @@ public class RestClient {
      *
      * @param encodedusernameAndPassword The encoded basic authentication user name/password
      *
-     * @throws java.io.UnsupportedEncodingException When the default encoding is not supported
+     * @throws UnsupportedEncodingException When the default encoding is not supported
      */
     public RestClient(String encodedusernameAndPassword) throws UnsupportedEncodingException {
         this();
@@ -168,7 +168,7 @@ public class RestClient {
      * @param username The basic authentication user name
      * @param password The basic authentication password
      *
-     * @throws java.io.UnsupportedEncodingException When the default encoding is not supported
+     * @throws UnsupportedEncodingException When the default encoding is not supported
      */
     public RestClient(String username, String password) throws UnsupportedEncodingException {
         this();
@@ -206,12 +206,12 @@ public class RestClient {
      * @param method  The method to call e.g. (GET or POST)
      * @param action  The action to call
      * @param query   The query string to use
-     * @param body    the json body to send
-     * @param headers the headers to send
+     * @param body    The json body to send
+     * @param headers The headers to send
      *
      * @return map of JSON based results
      *
-     * @throws com.plenigo.sdk.PlenigoException whenever an error happens
+     * @throws PlenigoException whenever an error happens
      */
     @SuppressWarnings("unchecked")
     private Map<String, Object> call(String apiUrl, final String method,
@@ -240,8 +240,8 @@ public class RestClient {
     /**
      * Adds the body map as a json object to the http request.
      *
-     * @param con  the http connection
-     * @param body the json body to send
+     * @param con  The http connection
+     * @param body The json body to send
      *
      * @throws IOException if a write error occurs
      */
@@ -265,9 +265,9 @@ public class RestClient {
      *
      * @return A Map that represents the json response
      *
-     * @throws java.io.IOException              if a communication error happened
-     * @throws ParseException                   If there was an error parsing the response given as a JSON
-     * @throws com.plenigo.sdk.PlenigoException whenever an error happens
+     * @throws IOException      if a communication error happened
+     * @throws ParseException   If there was an error parsing the response given as a JSON
+     * @throws PlenigoException whenever an error happens
      */
     private Map<String, Object> handleResponse(HttpURLConnection con, String resource) throws IOException, ParseException, PlenigoException {
         Map<String, Object> json;
@@ -315,13 +315,13 @@ public class RestClient {
      * that wants to be called and the query string if any.
      *
      * @param apiUrl  The API url to be queried
-     * @param action  action to be used
-     * @param query   query string
-     * @param headers the headers to send
+     * @param action  Action to be used
+     * @param query   Query string
+     * @param headers The headers to send
      *
-     * @return {@link java.net.HttpURLConnection}
+     * @return {@link HttpURLConnection}
      *
-     * @throws java.io.IOException When there is a read/write error
+     * @throws IOException When there is a read/write error
      */
     private HttpURLConnection getHttpConnection(String apiUrl, String action,
                                                 String query, Map<String, String> headers) throws IOException {
@@ -352,8 +352,8 @@ public class RestClient {
     /**
      * Adds the headers to teh http request.
      *
-     * @param con     the connection to use
-     * @param headers headers to add
+     * @param con     The connection to use
+     * @param headers Headers to add
      */
     private void addHeadersToRequest(HttpURLConnection con, Map<String, String> headers) {
         if (headers != null && !headers.isEmpty()) {
@@ -369,11 +369,11 @@ public class RestClient {
      * @param apiUrl   The base API url
      * @param resource The resource to call
      * @param query    The query string to use
-     * @param headers  the headers to send
+     * @param headers  The headers to send
      *
      * @return The map result of the call
      *
-     * @throws com.plenigo.sdk.PlenigoException whenever an error happens
+     * @throws PlenigoException whenever an error happens
      */
     public Map<String, Object> get(String apiUrl, String resource,
                                    String query, Map<String, String> headers) throws PlenigoException {
@@ -386,12 +386,12 @@ public class RestClient {
      * @param apiUrl   The base API url
      * @param resource The resource to call
      * @param query    The query string to use
-     * @param body     The query string to use
-     * @param headers  the headers to send
+     * @param body     The body to use
+     * @param headers  The headers to send
      *
      * @return The map result of the call
      *
-     * @throws com.plenigo.sdk.PlenigoException whenever an error happens
+     * @throws PlenigoException whenever an error happens
      */
     public Map<String, Object> post(String apiUrl, String resource,
                                     String query, Map<String, String> body, Map<String, String> headers) throws PlenigoException {
@@ -404,11 +404,11 @@ public class RestClient {
      * @param apiUrl   The base API url
      * @param resource The resource to call
      * @param query    The query string to use
-     * @param headers  the headers to send
+     * @param headers  The headers to send
      *
      * @return The map result of the call
      *
-     * @throws com.plenigo.sdk.PlenigoException whenever an error happens
+     * @throws PlenigoException whenever an error happens
      */
     public Map<String, Object> delete(String apiUrl, String resource,
                                       String query, Map<String, String> headers) throws PlenigoException {
@@ -421,15 +421,15 @@ public class RestClient {
      * @param apiUrl   The base API url
      * @param resource The resource to call
      * @param query    The query string to use
-     * @param body     The query string to use
-     * @param headers  the headers to send
+     * @param body     The body to use
+     * @param headers  The headers to send
      *
      * @return The map result of the call
      *
-     * @throws com.plenigo.sdk.PlenigoException whenever an error happens
+     * @throws PlenigoException whenever an error happens
      */
     public Map<String, Object> put(String apiUrl, String resource,
-                                    String query, Map<String, String> body, Map<String, String> headers) throws PlenigoException {
+                                   String query, Map<String, String> body, Map<String, String> headers) throws PlenigoException {
         return call(apiUrl, PUT_METHOD, resource, query, body, headers);
     }
 }
