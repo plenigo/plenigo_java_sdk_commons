@@ -221,4 +221,15 @@ public final class ApiParams {
      * Mobile Secret size parameter.
      */
     public static final String MOBILE_SECRET_SIZE = "size";
+
+
+    /**
+     * Max parallell app access parameter.
+     */
+    public static final String MAX_PARALLEL_APP_ACCESS = "maxParallelAppAccess";
+
+    /**
+     * Custom information parameter.
+     */
+    public static final String CUSTOM_INFO = "customInfo";
 }
