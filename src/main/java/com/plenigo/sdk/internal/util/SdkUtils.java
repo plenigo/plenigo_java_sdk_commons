@@ -96,7 +96,7 @@ public final class SdkUtils {
      * @return a String of key value pairs
      */
     public static String getStringFromMap(final Map<String, Object> keyValuePairs) {
-        return buildQueryString(keyValuePairs, ENTRY_SEPARATOR, KEY_VALUE_SEPARATOR, true);
+        return buildQueryString(keyValuePairs, ENTRY_SEPARATOR, KEY_VALUE_SEPARATOR);
     }
 
     /**
@@ -107,7 +107,7 @@ public final class SdkUtils {
      * @return The query string
      */
     public static String buildUrlQueryString(final Map<String, Object> map) {
-        return buildQueryString(map, URL_QUERY_STRING_ENTRY_SEPARATOR, URL_QUERY_STRING_KEY_VALUE_SEPARATOR, true);
+        return buildQueryString(map, URL_QUERY_STRING_ENTRY_SEPARATOR, URL_QUERY_STRING_KEY_VALUE_SEPARATOR);
     }
 
     /**
@@ -118,11 +118,10 @@ public final class SdkUtils {
      * @param map               The key value map
      * @param entrySeparator    The separator used per key-value pair
      * @param keyValueSeparator The separator used to delimit the key and value
-     * @param useEncoding       Boolean that specifies if the keys and values should be encoded with the default charset
      *
      * @return A query string
      */
-    private static String buildQueryString(Map<String, Object> map, String entrySeparator, String keyValueSeparator, Boolean useEncoding) {
+    private static String buildQueryString(Map<String, Object> map, String entrySeparator, String keyValueSeparator) {
         StringBuilder stringBuilder = new StringBuilder();
         for (Map.Entry<String, Object> key : map.entrySet()) {
             if (stringBuilder.length() > 0) {
@@ -140,10 +139,10 @@ public final class SdkUtils {
                     if (collVal != null) {
                         value = collVal.toString();
                     }
-                    appendQueryStringValue(keyValueSeparator, useEncoding, stringBuilder, key, value);
+                    appendQueryStringValue(keyValueSeparator, stringBuilder, key, value);
                 }
             } else {
-                appendQueryStringValue(keyValueSeparator, useEncoding, stringBuilder, key, value);
+                appendQueryStringValue(keyValueSeparator, stringBuilder, key, value);
             }
         }
         return stringBuilder.toString();
@@ -153,31 +152,22 @@ public final class SdkUtils {
      * Append a query string value to the specified string builder.
      *
      * @param keyValueSeparator The separator of the key and value
-     * @param useEncoding       true if encoding is required
      * @param stringBuilder     The string builder to append to
      * @param key               The key to be used
      * @param value             The value to be used
      */
-    private static void appendQueryStringValue(String keyValueSeparator, Boolean useEncoding, StringBuilder stringBuilder, Map.Entry<String, Object> key,
+    private static void appendQueryStringValue(String keyValueSeparator, StringBuilder stringBuilder, Map.Entry<String, Object> key,
                                                String value) {
         try {
             if (key.getKey() != null) {
                 String keyStr;
-                if (useEncoding) {
-                    keyStr = URLEncoder.encode(key.getKey(), Charset.DEFAULT);
-                } else {
-                    keyStr = key.getKey();
-                }
+                keyStr = URLEncoder.encode(key.getKey(), Charset.DEFAULT);
                 stringBuilder.append(keyStr);
             }
             stringBuilder.append(keyValueSeparator);
             if (value != null) {
                 String valueStr;
-                if (useEncoding) {
-                    valueStr = URLEncoder.encode(value, Charset.DEFAULT);
-                } else {
-                    valueStr = value;
-                }
+                valueStr = URLEncoder.encode(value, Charset.DEFAULT);
                 stringBuilder.append(valueStr);
             }
         } catch (UnsupportedEncodingException e) {
