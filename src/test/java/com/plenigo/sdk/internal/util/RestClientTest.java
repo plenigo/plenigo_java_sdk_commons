@@ -15,10 +15,12 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.UnknownHostException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
@@ -49,10 +51,61 @@ public class RestClientTest {
      */
     private static final String JSON_ASPX = "/json.aspx";
     private static final String LOGGED_IN_OK_JSON = "{\"userId\":{\"Error\":\"cannot be null\",\"Rejected Value\":\"null\"}}";
+    public static final String API_URL = "http://jsonplaceholder.typicode.com/posts/1";
     /**
      * URL of a test API.
      */
     private String url = "http://api.search.live.net";
+
+    @Test
+    public final void testGetCallToApi() throws PlenigoException {
+        RestClient client = new RestClient();
+        Map<String, Object> stringObjectMap = client.get(API_URL, "", null, null);
+        assertNotNull(stringObjectMap);
+    }
+
+    @Test
+    public final void testGetCallToApiWithHeaders() throws PlenigoException {
+        RestClient client = new RestClient();
+        Map<String, Object> stringObjectMap = client.get(API_URL, "", null, Collections.singletonMap("SampleHeader", "SampleValue"));
+        assertNotNull(stringObjectMap);
+    }
+    @Test
+    public final void testPostCallToApi() throws PlenigoException {
+        RestClient client = new RestClient();
+        Map<String, Object> stringObjectMap = client.post("http://jsonplaceholder.typicode.com/posts", "", null, null, null);
+        assertNotNull(stringObjectMap);
+    }
+
+    @Test
+    public final void testPutCallToApi() throws PlenigoException {
+        RestClient client = new RestClient();
+        Map<String, String> data = new HashMap<String, String>();
+        data.put("id", "1");
+        data.put("title", "foo");
+        data.put("body", "bar");
+        data.put("userId", "1");
+        Map<String, Object> stringObjectMap = client.put(API_URL, "", null, data, null);
+        assertNotNull(stringObjectMap);
+    }
+
+    @Test
+    public final void testDeleteCallToApi() throws PlenigoException {
+        RestClient client = new RestClient();
+        Map<String, Object> stringObjectMap = client.delete(API_URL, "", null, null);
+        assertNotNull(stringObjectMap);
+    }
+
+    /**
+     * Tests the {@link RestClient#buildURL(String, String)} method with a query
+     * string.
+     */
+    @Test
+    public final void testGetCall() throws PlenigoException {
+        RestClient client = new RestClient();
+        Map<String, Object> stringObjectMap = client.get(API_URL, "", null, null);
+        assertNotNull(stringObjectMap);
+    }
 
     /**
      * Tests the {@link RestClient#buildURL(String, String)} method with a query
@@ -62,6 +115,26 @@ public class RestClientTest {
     public final void testBuildURLWithQueryParams() {
         String expectedUrl = "/json.aspx?query=sushi&sources=web";
         RestClient client = new RestClient();
+        String action = JSON_ASPX;
+        String query = QUERY_SUSHI_SOURCES_WEB;
+        String builtURL = ReflectionTestUtils.invokeMethod(client, "buildURL", action, query);
+        assertEquals(expectedUrl, builtURL);
+    }
+
+    @Test
+    public final void testEncodedPasswordConstructor() throws UnsupportedEncodingException {
+        String expectedUrl = "/json.aspx?query=sushi&sources=web";
+        RestClient client = new RestClient("samplePassword");
+        String action = JSON_ASPX;
+        String query = QUERY_SUSHI_SOURCES_WEB;
+        String builtURL = ReflectionTestUtils.invokeMethod(client, "buildURL", action, query);
+        assertEquals(expectedUrl, builtURL);
+    }
+
+    @Test
+    public final void testUsernameAndPasswordConstructor() throws UnsupportedEncodingException {
+        String expectedUrl = "/json.aspx?query=sushi&sources=web";
+        RestClient client = new RestClient("sampleUser", "samplePassword");
         String action = JSON_ASPX;
         String query = QUERY_SUSHI_SOURCES_WEB;
         String builtURL = ReflectionTestUtils.invokeMethod(client, "buildURL", action, query);
