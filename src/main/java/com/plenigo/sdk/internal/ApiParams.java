@@ -226,15 +226,4 @@ public final class ApiParams {
      * Language parameter.
      */
     public static final String LANGUAGE = "language";
-
-
-    /**
-     * Max parallell app access parameter.
-     */
-    public static final String MAX_PARALLEL_APP_ACCESS = "maxParallelAppAccess";
-
-    /**
-     * Custom information parameter.
-     */
-    public static final String CUSTOM_INFO = "customInfo";
 }

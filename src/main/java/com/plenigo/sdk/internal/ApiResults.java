@@ -224,4 +224,14 @@ public final class ApiResults {
      */
     public static final String LOGIN_TOKEN = "loginToken";
 
+    /**
+     * Max parallell app access parameter.
+     */
+    public static final String MAX_PARALLEL_APP_ACCESS = "maxParallelAppAccess";
+
+    /**
+     * Custom information parameter.
+     */
+    public static final String CUSTOM_INFO = "customInfo";
+
 }
