@@ -222,6 +222,11 @@ public final class ApiParams {
      */
     public static final String MOBILE_SECRET_SIZE = "size";
 
+    /**
+     * Language parameter.
+     */
+    public static final String LANGUAGE = "language";
+
 
     /**
      * Max parallell app access parameter.
