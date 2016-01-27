@@ -15,6 +15,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.UnknownHostException;
@@ -62,6 +63,26 @@ public class RestClientTest {
     public final void testBuildURLWithQueryParams() {
         String expectedUrl = "/json.aspx?query=sushi&sources=web";
         RestClient client = new RestClient();
+        String action = JSON_ASPX;
+        String query = QUERY_SUSHI_SOURCES_WEB;
+        String builtURL = ReflectionTestUtils.invokeMethod(client, "buildURL", action, query);
+        assertEquals(expectedUrl, builtURL);
+    }
+
+    @Test
+    public final void testEncodedPasswordConstructor() throws UnsupportedEncodingException {
+        String expectedUrl = "/json.aspx?query=sushi&sources=web";
+        RestClient client = new RestClient("samplePassword");
+        String action = JSON_ASPX;
+        String query = QUERY_SUSHI_SOURCES_WEB;
+        String builtURL = ReflectionTestUtils.invokeMethod(client, "buildURL", action, query);
+        assertEquals(expectedUrl, builtURL);
+    }
+
+    @Test
+    public final void testUsernameAndPasswordConstructor() throws UnsupportedEncodingException {
+        String expectedUrl = "/json.aspx?query=sushi&sources=web";
+        RestClient client = new RestClient("sampleUser", "samplePassword");
         String action = JSON_ASPX;
         String query = QUERY_SUSHI_SOURCES_WEB;
         String builtURL = ReflectionTestUtils.invokeMethod(client, "buildURL", action, query);
