@@ -22,6 +22,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.anyString;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.support.SuppressCode.suppressConstructor;
 
@@ -60,7 +61,7 @@ public class InternalTokenApiServiceTest {
         map.put(ApiResults.STATE, "12345");
         map.put(ApiResults.ACCESS_TOKEN, "1");
         map.put(ApiResults.EXPIRES_IN, 3600L);
-        Mockito.when(restClient.post(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyMap(), Mockito.anyMap()))
+        Mockito.when(restClient.post(anyString(), anyString(), anyString(), anyString(), Mockito.anyMap(), Mockito.anyMap()))
                 .thenReturn(map);
         AccessTokenRequest request = new AccessTokenRequest("1234",URL);
         TokenData tokenData = internalTokenApiService.getAccessToken(COMPANY_ID, SECRET, URL, request);
@@ -77,7 +78,7 @@ public class InternalTokenApiServiceTest {
         map.put(ApiResults.STATE, "12345");
         map.put(ApiResults.ACCESS_TOKEN, "1");
         map.put(ApiResults.EXPIRES_IN, 3600L);
-        Mockito.when(restClient.post(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyMap(), Mockito.anyMap()))
+        Mockito.when(restClient.post(anyString(), anyString(), anyString(), anyString(), Mockito.anyMap(), Mockito.anyMap()))
                 .thenReturn(map);
         RefreshTokenRequest request = new RefreshTokenRequest("1234");
         TokenData tokenData = internalTokenApiService.getNewAccessToken(COMPANY_ID, SECRET, URL, request);
@@ -93,7 +94,7 @@ public class InternalTokenApiServiceTest {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put(ApiResults.ERROR, "1233");
         map.put(ApiResults.ERROR_DESCRIPTION, "ERROR MSG");
-        Mockito.when(restClient.post(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyMap(), Mockito.anyMap()))
+        Mockito.when(restClient.post(anyString(), anyString(), anyString(), anyString(), Mockito.anyMap(), Mockito.anyMap()))
                 .thenReturn(map);
         RefreshTokenRequest request = new RefreshTokenRequest("1234", "12391823");
         internalTokenApiService.getNewAccessToken(COMPANY_ID, SECRET, URL, request);
@@ -107,7 +108,7 @@ public class InternalTokenApiServiceTest {
         map.put(ApiResults.STATE, "123456");
         map.put(ApiResults.ACCESS_TOKEN, "1");
         map.put(ApiResults.EXPIRES_IN, 3600L);
-        Mockito.when(restClient.post(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.anyMap(), Mockito.anyMap()))
+        Mockito.when(restClient.post(anyString(), anyString(), anyString(), anyString(), Mockito.anyMap(), Mockito.anyMap()))
                 .thenReturn(map);
         RefreshTokenRequest request = new RefreshTokenRequest("1234", "123");
         TokenData tokenData = internalTokenApiService.getNewAccessToken(COMPANY_ID, SECRET, URL, request);

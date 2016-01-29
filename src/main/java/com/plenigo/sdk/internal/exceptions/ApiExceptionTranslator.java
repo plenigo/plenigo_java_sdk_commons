@@ -46,6 +46,10 @@ public final class ApiExceptionTranslator {
         productApiCodes.put(String.valueOf(HttpURLConnection.HTTP_BAD_REQUEST), new ApiExceptionInfo(ErrorCode.INVALID_PARAMETERS,
                 new InvalidParametersHandler()));
         errorCodes.put(ApiURLs.USER_PRODUCT_ACCESS, productApiCodes);
+        Map<String, ApiExceptionInfo> userProfileCodes = new LinkedHashMap<String, ApiExceptionInfo>();
+        userProfileCodes.put(String.valueOf(HttpURLConnection.HTTP_BAD_REQUEST), new ApiExceptionInfo(ErrorCode.INVALID_PARAMETERS,
+                new InvalidParametersHandler()));
+        errorCodes.put(ApiURLs.USER_PROFILE, userProfileCodes);
         Map<String, ApiExceptionInfo> queryProductApiCodes = new LinkedHashMap<String, ApiExceptionInfo>();
         queryProductApiCodes.put(String.valueOf(HttpURLConnection.HTTP_NOT_FOUND), new ApiExceptionInfo(ErrorCode.PRODUCT_NOT_FOUND));
         queryProductApiCodes.put(String.valueOf(HttpURLConnection.HTTP_UNAUTHORIZED), new ApiExceptionInfo(ErrorCode.INVALID_SECRET_OR_COMPANY_ID));
@@ -105,7 +109,6 @@ public final class ApiExceptionTranslator {
                 new InvalidParametersHandler()));
         registerExternalUser.put(String.valueOf(HttpURLConnection.HTTP_FORBIDDEN), new ApiExceptionInfo(ErrorCode.COMPANY_NOT_QUALIFIED));
         errorCodes.put(ApiURLs.REGISTER_EXTERNAL_USER_URL, registerExternalUser);
-
 
         LOGGER.log(Level.FINEST, "Registered error codes: {0}", errorCodes);
     }

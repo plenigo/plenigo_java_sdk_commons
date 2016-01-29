@@ -56,21 +56,21 @@ public class InternalUserApiServiceTest {
     @Test
     public void testSuccessfulHasUserBought() throws Exception {
 
-        Mockito.when(restClient.get(anyString(), anyString(), anyString(), anyMap()))
+        Mockito.when(restClient.get(anyString(), anyString(), anyString(), anyString(), anyMap()))
                 .thenReturn(Collections.singletonMap("enabled", (Object) "true"));
         assertTrue(internalUserApiService.hasUserBought("BASE", "CUSTOMER_ID", SECRET_ID, COMPANY_ID, false, Collections.singletonList("")));
     }
 
     @Test
     public void testUnsuccessfulHasUserBoughtBecauseOfNoAccess() throws Exception {
-        Mockito.when(restClient.get(anyString(), anyString(), anyString(), anyMap()))
+        Mockito.when(restClient.get(anyString(), anyString(), anyString(), anyString(), anyMap()))
                 .thenThrow(new PlenigoException(ErrorCode.CANNOT_ACCESS_PRODUCT, "", null));
         assertFalse(internalUserApiService.hasUserBought("BASE", "CUSTOMER_ID", SECRET_ID, COMPANY_ID, false, Collections.singletonList("")));
     }
 
     @Test(expected = PlenigoException.class)
     public void testUnsuccessfulHasUserBoughtBecauseOfInternalServerError() throws Exception {
-        Mockito.when(restClient.get(anyString(), anyString(), anyString(), anyMap()))
+        Mockito.when(restClient.get(anyString(), anyString(), anyString(), anyString(), anyMap()))
                 .thenThrow(new PlenigoException(ErrorCode.SERVER, "", null));
         assertFalse(internalUserApiService.hasUserBought("BASE", "CUSTOMER_ID", SECRET_ID, COMPANY_ID, false, Collections.singletonList("")));
     }
@@ -79,7 +79,7 @@ public class InternalUserApiServiceTest {
     public void testIsPaywallEnabled() throws Exception {
         Map<String, Object> result = new HashMap<String, Object>();
         result.put(ApiResults.PAYWALL_STATE, Boolean.TRUE.toString());
-        Mockito.when(restClient.get(anyString(), anyString(), anyString(), anyMap()))
+        Mockito.when(restClient.get(anyString(), anyString(), anyString(), anyString(), anyMap()))
                 .thenReturn(result);
         assertTrue(internalUserApiService.isPaywallEnabled("baseUri","secret","companyId"));
     }
@@ -88,7 +88,7 @@ public class InternalUserApiServiceTest {
     public void testGetUserData() throws Exception {
         Map<String, Object> result = new HashMap<String, Object>();
         result.put(ApiResults.PAYWALL_STATE, Boolean.TRUE.toString());
-        Mockito.when(restClient.get(anyString(), anyString(), anyString(), anyMap()))
+        Mockito.when(restClient.get(anyString(), anyString(), anyString(), anyString(), anyMap()))
                 .thenReturn(result);
         assertNotNull(internalUserApiService.getUserData("uri", SECRET_ID, COMPANY_ID, "accessToken"));
     }
@@ -98,7 +98,7 @@ public class InternalUserApiServiceTest {
         Map<String, Object> result = new HashMap<String, Object>();
         result.put(ApiResults.ERROR, "CODE");
         result.put(ApiResults.DESCRIPTION, "DESC");
-        Mockito.when(restClient.get(anyString(), anyString(), anyString(), anyMap()))
+        Mockito.when(restClient.get(anyString(), anyString(), anyString(), anyString(), anyMap()))
                 .thenReturn(result);
         assertNotNull(internalUserApiService.getUserData("uri", SECRET_ID, COMPANY_ID, "accessToken"));
     }
