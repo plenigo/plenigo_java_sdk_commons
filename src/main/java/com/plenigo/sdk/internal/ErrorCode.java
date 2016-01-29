@@ -28,7 +28,8 @@ public enum ErrorCode {
     PRODUCT_ACCESS_ALLOWED("product_access_allowed", "This user has access to this product"),
     APP_ID_DELETED("app_id_deleted", "The app id was deleted"),
     INCORRECT_MOBILE_SECRET("incorrect_mobile_secret", "The mobile secret or the customer id is incorrect"),
-    COMPANY_NOT_QUALIFIED("company_not_qualified", "The company is not qualified for a closed user group");
+    COMPANY_NOT_QUALIFIED("company_not_qualified", "The company is not qualified for a closed user group"),
+    OVERRIDE_MODE_REQUIRES_PRICE("override_mode_req_price", "You must provide a price in the product object to make use of the override mode!");
 
     private String code;
     private String errorMsg;

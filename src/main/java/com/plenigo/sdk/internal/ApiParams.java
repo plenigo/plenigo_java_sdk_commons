@@ -226,4 +226,9 @@ public final class ApiParams {
      * Language parameter.
      */
     public static final String LANGUAGE = "language";
+
+    /**
+     * Override mode parameter.
+     */
+    public static final String OVERRIDE_MODE = "om";
 }
