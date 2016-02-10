@@ -152,4 +152,11 @@ public final class ApiURLs {
      */
     public static final String EXTERNAL_USER_CREATE_LOGIN_TOKEN_URL = API_BASE_URL + "/externalUser/%s/createLoginToken";
 
+
+    /**
+     * This URL is used to get the paginated list of company users.
+     */
+    public static final String COMPANY_USERS = API_BASE_URL + "company/users";
+
+
 }
