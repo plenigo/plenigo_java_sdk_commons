@@ -156,7 +156,18 @@ public final class ApiURLs {
     /**
      * This URL is used to get the paginated list of company users.
      */
-    public static final String COMPANY_USERS = API_BASE_URL + "company/users";
+    public static final String COMPANY_USERS = API_BASE_URL + "/company/users";
+
+    /**
+     * This URL is used to get the list of company users by provided user ids.
+     */
+    public static final String COMPANY_USERS_SELECT = API_BASE_URL + "/company/users/select";
+
+    /**
+     * This URL is used to get the paginated list of transactions.
+     */
+    public static final String TX_SEARCH = API_BASE_URL + "/transactions/search";
+
 
 
 }
