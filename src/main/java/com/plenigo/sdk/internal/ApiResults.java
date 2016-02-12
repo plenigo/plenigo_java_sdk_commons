@@ -234,4 +234,104 @@ public final class ApiResults {
      */
     public static final String CUSTOM_INFO = "customInfo";
 
+
+    /**
+     * Company user language parameter.
+     */
+    public static final String LANGUAGE = "language";
+
+    /**
+     * Company user mobile number parameter.
+     */
+    public static final String MOBILE_NUMBER = "mobileNumber";
+
+    /**
+     * Company user stater parameter.
+     */
+    public static final String USER_STATE = "userState";
+
+    /**
+     * Company user birthday parameter.
+     */
+    public static final String BIRTHDAY = "birthday";
+
+    /**
+     * Company user newsletter agreement state parameter.
+     */
+    public static final String AGREEMENT_STATE = "agreementState";
+
+    /**
+     * Company user company parameter.
+     */
+    public static final String COMPANY = "company";
+
+    /**
+     * Company user vat number parameter.
+     */
+    public static final String VAT_NUMBER = "vatNumber";
+
+    /**
+     * Transaction id parameter.
+     */
+    public static final String TRANSACTION_ID = "transactionId";
+
+    /**
+     * Taxes percentage parameter.
+     */
+    public static final String TAXES_PERCENTAGE = "taxesPercentage";
+
+    /**
+     * Taxes amount parameter.
+     */
+    public static final String TAXES_AMOUNT = "taxesAmount";
+
+    /**
+     * Taxes country parameter.
+     */
+    public static final String TAXES_COUNTRY = "taxesCountry";
+
+    /**
+     * Payment method parameter.
+     */
+    public static final String PAYMENT_METHOD = "paymentMethod";
+
+    /**
+     * Transaction date parameter.
+     */
+    public static final String TRANSACTION_DATE = "transactionDate";
+
+    /**
+     * Transaction status parameter.
+     */
+    public static final String TRANSACTION_STATUS = "status";
+
+    /**
+     * Shipping costs parameter.
+     */
+    public static final String SHIPPING_COSTS = "shippingCosts";
+
+    /**
+     * Shipping costs taxes percentage parameter.
+     */
+    public static final String SHIPPING_COSTS_TAXES_PERCENTAGE = "shippingCostsTaxesPercentage";
+
+    /**
+     * Shipping costs taxes amount parameter.
+     */
+    public static final String SHIPPING_COSTS_TAXES_AMOUNT = "shippingCostsTaxesAmount";
+
+    /**
+     * Billing id parameter.
+     */
+    public static final String BILLING_ID = "billingId";
+
+    /**
+     * Cancellation transaction id parameter.
+     */
+    public static final String CANCELLATION_TRANSACTION_ID = "cancellationTransactionId";
+
+    /**
+     * Cancelled transaction id parameter.
+     */
+    public static final String CANCELLED_TRANSACTION_ID = "cancelledTransactionId";
 }

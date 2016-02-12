@@ -333,7 +333,15 @@ public final class SdkUtils {
     @SuppressWarnings("unchecked")
     public static Map<String, Object> parseJSONObject(final Reader in)
             throws ParseException, IOException {
-        return (Map<String, Object>) parseJSON(in);
+        Object o = parseJSON(in);
+        Map<String, Object> objectMap;
+        if (o instanceof Map) {
+            objectMap = (Map<String, Object>) o;
+        } else {
+            objectMap = new HashMap<String, Object>();
+            objectMap.put(ApiResults.ELEMENTS, o);
+        }
+        return objectMap;
     }
 
 
@@ -439,5 +447,63 @@ public final class SdkUtils {
             return "";
         }
         return value.toString();
+    }
+
+    /**
+     * Converts values to CSV values.
+     *
+     * @param values values to separate by comma
+     *
+     * @return a comma separated value list
+     */
+    public static String toCsv(List<String> values) {
+        return listToCsv(values, ',');
+    }
+
+    /**
+     * Converts a list to a string of values separated by the provided separator.
+     *
+     * @param listOfStrings the list of string to convert
+     * @param separator     the separator
+     *
+     * @return a character separated string
+     */
+    private static String listToCsv(List<String> listOfStrings, char separator) {
+        StringBuilder sb = new StringBuilder();
+
+        // all but last
+        for (int i = 0; i < listOfStrings.size() - 1; i++) {
+            sb.append(listOfStrings.get(i));
+            sb.append(separator);
+        }
+
+        // last string, no separator
+        if (listOfStrings.size() > 0) {
+            sb.append(listOfStrings.get(listOfStrings.size() - 1));
+        }
+
+        return sb.toString();
+    }
+
+    /**
+     * Evaluates if a string is blank.
+     *
+     * @param str the string to evaluate
+     *
+     * @return true if its blank, false otherwise
+     */
+    public static boolean isBlank(final String str) {
+        return str == null || (str.trim().length()) == 0;
+    }
+
+    /**
+     * Evaluates if a string is not blank.
+     *
+     * @param str the string to evaluate
+     *
+     * @return true if its NOT blank, false otherwise
+     */
+    public static boolean isNotBlank(final String str) {
+        return !isBlank(str);
     }
 }

@@ -109,6 +109,17 @@ public final class ApiExceptionTranslator {
                 new InvalidParametersHandler()));
         registerExternalUser.put(String.valueOf(HttpURLConnection.HTTP_FORBIDDEN), new ApiExceptionInfo(ErrorCode.COMPANY_NOT_QUALIFIED));
         errorCodes.put(ApiURLs.REGISTER_EXTERNAL_USER_URL, registerExternalUser);
+        Map<String, ApiExceptionInfo> companyUsersErrorCodes = new LinkedHashMap<String, ApiExceptionInfo>();
+        companyUsersErrorCodes.put(String.valueOf(HttpURLConnection.HTTP_UNAUTHORIZED), new ApiExceptionInfo(ErrorCode.INVALID_SECRET_OR_COMPANY_ID));
+        companyUsersErrorCodes.put(String.valueOf(HttpURLConnection.HTTP_BAD_REQUEST), new ApiExceptionInfo(ErrorCode.INVALID_PARAMETERS,
+                new InvalidParametersHandler()));
+        errorCodes.put(ApiURLs.COMPANY_USERS, companyUsersErrorCodes);
+        errorCodes.put(ApiURLs.COMPANY_USERS_SELECT, companyUsersErrorCodes);
+        Map<String, ApiExceptionInfo> transactionSearchErrorCodes = new LinkedHashMap<String, ApiExceptionInfo>();
+        transactionSearchErrorCodes.put(String.valueOf(HttpURLConnection.HTTP_UNAUTHORIZED), new ApiExceptionInfo(ErrorCode.INVALID_SECRET_OR_COMPANY_ID));
+        transactionSearchErrorCodes.put(String.valueOf(HttpURLConnection.HTTP_BAD_REQUEST), new ApiExceptionInfo(ErrorCode.INVALID_PARAMETERS,
+                new InvalidParametersHandler()));
+        errorCodes.put(ApiURLs.TX_SEARCH, transactionSearchErrorCodes);
 
         LOGGER.log(Level.FINEST, "Registered error codes: {0}", errorCodes);
     }
@@ -147,8 +158,8 @@ public final class ApiExceptionTranslator {
         }
         String defaultMessage = "Error code [" + errorCode + "] occured while querying the '" + resource + "' API URL, "
                 + "response body: [" + SdkUtils.toString(inputStream) + "]";
-        LOGGER.log(Level.FINEST, "Error code {0} was not found, throwing PlenigoException with default message: {1}"
-                , new Object[]{errorCode, defaultMessage});
+        LOGGER.log(Level.FINEST, "Error code {0} was not found, throwing PlenigoException with default message: {1}",
+                new Object[]{errorCode, defaultMessage});
         return new PlenigoException(errorCode, defaultMessage);
     }
 }

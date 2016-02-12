@@ -151,6 +151,11 @@ public final class ApiParams {
 
 
     /**
+     * The amount of results required per page.
+     */
+    public static final String PAGE_NUMBER = "page";
+
+    /**
      * The last id of the last executed result for paging.
      */
     public static final String LAST_ID = "lastId";
@@ -231,4 +236,29 @@ public final class ApiParams {
      * Override mode parameter.
      */
     public static final String OVERRIDE_MODE = "om";
+
+    /**
+     * User ids parameter.
+     */
+    public static final String USER_IDS = "userIds";
+
+    /**
+     * Start date parameter.
+     */
+    public static final String START_DATE = "startDate";
+
+    /**
+     * End date parameter.
+     */
+    public static final String END_DATE = "endDate";
+
+    /**
+     * Payment method parameter.
+     */
+    public static final String PAYMENT_METHOD = "paymentMethod";
+
+    /**
+     * Transaction status parameter.
+     */
+    public static final String TRANSACTION_STATUS = "transactionStatus";
 }

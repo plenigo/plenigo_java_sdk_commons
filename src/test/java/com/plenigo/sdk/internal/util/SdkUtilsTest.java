@@ -9,6 +9,7 @@ import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -169,6 +170,15 @@ public class SdkUtilsTest {
     }
 
     @Test
+    public void testListResponse() throws IOException, org.json.simple.parser.ParseException {
+        String invalidParamsJson = "[ {\"userId\":{\"Error\":\"cannot be null\",\"Rejected Value\":\"null\"},\"password\":{\"Error\":\"cannot be null\"," +
+                "\"Rejected Value\":\"null\"}} ]";
+        Map<String, Object> json = SdkUtils.parseJSONObject(new StringReader(invalidParamsJson));
+        assertNotNull(json);
+        assertTrue(json instanceof Map);
+    }
+
+    @Test
     public void testSuccessfulParseQueryStringToMap() throws UnsupportedEncodingException {
         String queryString = "state=security_token%3D138r5719ru3e1%26url%3Dhttps://example.com/given_path&code=AdE123412EdVD";
         Map<String, String> params = SdkUtils.parseQueryStringToMap(queryString);
@@ -262,5 +272,49 @@ public class SdkUtilsTest {
     public void testConversionWithNegativeLongNumber() throws PlenigoException {
         String number = Long.MIN_VALUE + "";
         assertTrue(SdkUtils.getArrayValueIfExistsOrNull(0, new String[]{number}, Long.class).equals(Long.MIN_VALUE));
+    }
+
+    @Test
+    public void testToCsv() throws PlenigoException {
+       List<String> values = Arrays.asList("1","2","3");
+        String expectedReturn = "1,2,3";
+        assertEquals(expectedReturn, SdkUtils.toCsv(values));
+    }
+
+    @Test
+    public void testToCsvWithOneValue() throws PlenigoException {
+        List<String> values = Arrays.asList("1");
+        String expectedReturn = "1";
+        assertEquals(expectedReturn, SdkUtils.toCsv(values));
+    }
+
+    @Test
+    public void testToCsvWithBlankString() throws PlenigoException {
+        List<String> values = Arrays.asList("");
+        String expectedReturn = "";
+        assertEquals(expectedReturn, SdkUtils.toCsv(values));
+    }
+
+    @Test
+    public void testIsBlank() throws PlenigoException {
+        String value = " ";
+        assertTrue(SdkUtils.isBlank(value));
+    }
+
+    @Test
+    public void testIsBlankWithNonBlankString() throws PlenigoException {
+        String value = " 1 ";
+        assertFalse(SdkUtils.isBlank(value));
+    }
+
+    @Test
+    public void testIsBlankWithNull() throws PlenigoException {
+        assertTrue(SdkUtils.isBlank(null));
+    }
+
+    @Test
+    public void testIsNotBlank() throws PlenigoException {
+        String value = " ";
+        assertFalse(SdkUtils.isNotBlank(value));
     }
 }
