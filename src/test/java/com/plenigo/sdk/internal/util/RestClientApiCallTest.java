@@ -21,20 +21,21 @@ public class RestClientApiCallTest {
     @Test
     public final void testGetCallToApi() throws PlenigoException, UnsupportedEncodingException {
         RestClient client = new RestClient("encodedPassword");
-        Map<String, Object> stringObjectMap = client.get(API_URL, "", null, null);
+        Map<String, Object> stringObjectMap = client.get(API_URL, API_URL, "", null, null);
         assertNotNull(stringObjectMap);
     }
 
     @Test
     public final void testGetCallToApiWithHeaders() throws PlenigoException, UnsupportedEncodingException {
         RestClient client = new RestClient("userTest", "passwordTest");
-        Map<String, Object> stringObjectMap = client.get(API_URL, "", null, Collections.singletonMap("SampleHeader", "SampleValue"));
+        Map<String, Object> stringObjectMap = client.get(API_URL, API_URL, "", null, Collections.singletonMap("SampleHeader", "SampleValue"));
         assertNotNull(stringObjectMap);
     }
     @Test
     public final void testPostCallToApi() throws PlenigoException {
         RestClient client = new RestClient();
-        Map<String, Object> stringObjectMap = client.post("http://jsonplaceholder.typicode.com/posts", "", null, null, null);
+        String apiUrl = "http://jsonplaceholder.typicode.com/posts";
+        Map<String, Object> stringObjectMap = client.post(apiUrl, apiUrl, "", null, null, null);
         assertNotNull(stringObjectMap);
     }
 
@@ -46,14 +47,14 @@ public class RestClientApiCallTest {
         data.put("title", "foo");
         data.put("body", "bar");
         data.put("userId", "1");
-        Map<String, Object> stringObjectMap = client.put(API_URL, "", null, data, null);
+        Map<String, Object> stringObjectMap = client.put(API_URL, API_URL, "", null, data, null);
         assertNotNull(stringObjectMap);
     }
 
     @Test
     public final void testDeleteCallToApi() throws PlenigoException {
         RestClient client = new RestClient();
-        Map<String, Object> stringObjectMap = client.delete(API_URL, "", null, null);
+        Map<String, Object> stringObjectMap = client.delete(API_URL, API_URL, "", null, null);
         assertNotNull(stringObjectMap);
     }
 }

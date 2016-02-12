@@ -55,7 +55,7 @@ public class InternalUserApiService {
         params.put(ApiParams.PRODUCT_ID, productIds);
         params.put(ApiParams.TEST_MODE, testMode);
         try {
-            HttpConfig.get().getClient().get(baseUrl, ApiURLs.USER_PRODUCT_ACCESS, SdkUtils.buildUrlQueryString(params)
+            HttpConfig.get().getClient().get(baseUrl, ApiURLs.USER_PRODUCT_ACCESS, ApiURLs.USER_PRODUCT_ACCESS, SdkUtils.buildUrlQueryString(params)
                     , JWT.generateJWTTokenHeader(companyId, secret));
         } catch (PlenigoException pe) {
             //Forbidden means that the user has not bought the product.
@@ -80,7 +80,8 @@ public class InternalUserApiService {
      * @throws PlenigoException if any error happens
      */
     public boolean isPaywallEnabled(String baseUrl, String secret, String companyId) throws PlenigoException {
-        Map<String, Object> objectMap = HttpConfig.get().getClient().get(baseUrl, ApiURLs.PAYWALL_STATE, null, JWT.generateJWTTokenHeader(companyId, secret));
+        Map<String, Object> objectMap = HttpConfig.get().getClient().get(baseUrl, ApiURLs.PAYWALL_STATE, ApiURLs.PAYWALL_STATE, null
+                , JWT.generateJWTTokenHeader(companyId, secret));
         Object paywallState = objectMap.get(ApiResults.PAYWALL_STATE);
         boolean isEnabled = false;
         if (paywallState != null) {
@@ -107,7 +108,7 @@ public class InternalUserApiService {
         params.put(ApiParams.ACCESS_TOKEN, accessToken);
         params.put(ApiParams.COMPANY_ID, companyId);
         LOGGER.log(Level.FINEST, "Seeking user information for company: {0}", params.get(ApiParams.COMPANY_ID));
-        Map<String, Object> response = HttpConfig.get().getClient().get(url, ApiURLs.USER_PROFILE, SdkUtils.buildUrlQueryString(params)
+        Map<String, Object> response = HttpConfig.get().getClient().get(url, ApiURLs.USER_PROFILE, ApiURLs.USER_PROFILE, SdkUtils.buildUrlQueryString(params)
                 , JWT.generateJWTTokenHeader(companyId, secret));
         UserData userData;
         if (response.containsKey(ApiResults.ERROR)) {

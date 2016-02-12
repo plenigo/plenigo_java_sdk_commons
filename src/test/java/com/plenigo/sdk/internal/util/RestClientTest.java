@@ -60,20 +60,23 @@ public class RestClientTest {
     @Test
     public final void testGetCallToApi() throws PlenigoException {
         RestClient client = new RestClient();
-        Map<String, Object> stringObjectMap = client.get(API_URL, "", null, null);
+        String referenceUrl = API_URL;
+        Map<String, Object> stringObjectMap = client.get(API_URL, referenceUrl, "", null, null);
         assertNotNull(stringObjectMap);
     }
 
     @Test
     public final void testGetCallToApiWithHeaders() throws PlenigoException {
         RestClient client = new RestClient();
-        Map<String, Object> stringObjectMap = client.get(API_URL, "", null, Collections.singletonMap("SampleHeader", "SampleValue"));
+        String referenceUrl = API_URL;
+        Map<String, Object> stringObjectMap = client.get(API_URL, referenceUrl, "", null, Collections.singletonMap("SampleHeader", "SampleValue"));
         assertNotNull(stringObjectMap);
     }
     @Test
     public final void testPostCallToApi() throws PlenigoException {
         RestClient client = new RestClient();
-        Map<String, Object> stringObjectMap = client.post("http://jsonplaceholder.typicode.com/posts", "", null, null, null);
+        String referenceUrl = "http://jsonplaceholder.typicode.com/posts";
+        Map<String, Object> stringObjectMap = client.post(referenceUrl, referenceUrl, "", null, null, null);
         assertNotNull(stringObjectMap);
     }
 
@@ -85,14 +88,16 @@ public class RestClientTest {
         data.put("title", "foo");
         data.put("body", "bar");
         data.put("userId", "1");
-        Map<String, Object> stringObjectMap = client.put(API_URL, "", null, data, null);
+        String referenceUrl = API_URL;
+        Map<String, Object> stringObjectMap = client.put(API_URL, referenceUrl, "", null, data, null);
         assertNotNull(stringObjectMap);
     }
 
     @Test
     public final void testDeleteCallToApi() throws PlenigoException {
         RestClient client = new RestClient();
-        Map<String, Object> stringObjectMap = client.delete(API_URL, "", null, null);
+        String referenceUrl = API_URL;
+        Map<String, Object> stringObjectMap = client.delete(API_URL, referenceUrl, "", null, null);
         assertNotNull(stringObjectMap);
     }
 
@@ -103,7 +108,8 @@ public class RestClientTest {
     @Test
     public final void testGetCall() throws PlenigoException {
         RestClient client = new RestClient();
-        Map<String, Object> stringObjectMap = client.get(API_URL, "", null, null);
+        String referenceUrl = API_URL;
+        Map<String, Object> stringObjectMap = client.get(API_URL, referenceUrl, "", null, null);
         assertNotNull(stringObjectMap);
     }
 
@@ -219,7 +225,8 @@ public class RestClientTest {
     public final void testSuccessfulGet() throws Exception {
         RestClient client = PowerMockito.spy(new RestClient());
         mockOkConnection(client);
-        Map<String, Object> result = client.get(url, JSON_ASPX, QUERY_SUSHI_SOURCES_WEB, null);
+        String referenceUrl = "http://jsonplaceholder.typicode.com/posts";
+        Map<String, Object> result = client.get(url, referenceUrl, JSON_ASPX, QUERY_SUSHI_SOURCES_WEB, null);
         assertNotNull(result);
     }
 
@@ -234,7 +241,8 @@ public class RestClientTest {
         Mockito.when(connection.getResponseCode()).thenReturn(HttpURLConnection.HTTP_BAD_REQUEST);
         PowerMockito.when(client, method(RestClient.class, "getHttpConnection", String.class, String.class, String.class, Map.class))
                 .withArguments(anyString(), anyString(), anyString(), anyMap()).thenReturn(connection);
-        Map<String, Object> map = client.get(url, JSON_ASPX, QUERY_SUSHI_SOURCES_WEB, null);
+        String referenceUrl = url;
+        Map<String, Object> map = client.get(url, referenceUrl, JSON_ASPX, QUERY_SUSHI_SOURCES_WEB, null);
         assertNotNull(map);
     }
 
@@ -269,7 +277,8 @@ public class RestClientTest {
         RestClient client = PowerMockito.spy(new RestClient());
         PowerMockito.when(client, method(RestClient.class, "getHttpConnection", String.class, String.class, String.class, Map.class))
                 .withArguments(anyString(), anyString(), anyString(), anyMap()).thenThrow(exception);
-        client.get(url, JSON_ASPX, QUERY_SUSHI_SOURCES_WEB, null);
+        String referenceUrl = url;
+        client.get(url, referenceUrl, JSON_ASPX, QUERY_SUSHI_SOURCES_WEB, null);
     }
 
     @Test(expected = PlenigoException.class)
@@ -282,7 +291,7 @@ public class RestClientTest {
         InputStream mock = Mockito.mock(InputStream.class);
         Mockito.doThrow(new IOException("Test error")).when(mock).close();
         Mockito.when(connection.getErrorStream()).thenReturn(mock);
-        Map<String, Object> result = client.get(url, JSON_ASPX,
+        Map<String, Object> result = client.get(url, url, JSON_ASPX,
                 QUERY_SUSHI_SOURCES_WEB, null);
         assertNotNull(result);
     }
@@ -306,7 +315,7 @@ public class RestClientTest {
         PowerMockito.when(client, method(RestClient.class, "getHttpConnection", String.class, String.class, String.class, Map.class))
                 .withArguments(anyString(), anyString(), anyString(), anyMap()).thenReturn(connection);
         try {
-            client.get(url, JSON_ASPX, QUERY_SUSHI_SOURCES_WEB, null);
+            client.get(url, url, JSON_ASPX, QUERY_SUSHI_SOURCES_WEB, null);
         } catch (PlenigoException pe) {
             assertEquals(String.valueOf(HttpURLConnection.HTTP_FORBIDDEN), pe.getResponseCode());
         }
@@ -325,9 +334,9 @@ public class RestClientTest {
         try {
             PowerMockito.doCallRealMethod().
                     when(client,
-                            method(RestClient.class, "handleResponse", HttpURLConnection.class, String.class))
-                    .withArguments(any(HttpURLConnection.class), anyString());
-            client.get(url, ApiURLs.USER_PRODUCT_ACCESS, QUERY_SUSHI_SOURCES_WEB, null);
+                            method(RestClient.class, "handleResponse", HttpURLConnection.class, String.class, String.class))
+                    .withArguments(any(HttpURLConnection.class), anyString(), anyString());
+            client.get(url, ApiURLs.USER_PRODUCT_ACCESS, ApiURLs.USER_PRODUCT_ACCESS, QUERY_SUSHI_SOURCES_WEB, null);
         } catch (PlenigoException pe) {
             assertEquals(ErrorCode.INVALID_PARAMETERS.getCode(), pe.getResponseCode());
             assertNotNull(pe.getErrors());
@@ -345,7 +354,7 @@ public class RestClientTest {
         HttpURLConnection connection = mockOkConnection(client);
         Mockito.when(connection.getOutputStream()).thenReturn(Mockito.mock(OutputStream.class));
         Map<String, Object> result = client.post(url,
-                JSON_ASPX, QUERY_SUSHI_SOURCES_WEB, null, null);
+                url, JSON_ASPX, QUERY_SUSHI_SOURCES_WEB, null, null);
         assertNotNull(result);
     }
 
@@ -359,7 +368,7 @@ public class RestClientTest {
         HttpURLConnection connection = mockOkConnection(client);
         Mockito.when(connection.getOutputStream()).thenReturn(Mockito.mock(OutputStream.class));
         Map<String, Object> result = client.post(url,
-                JSON_ASPX, QUERY_SUSHI_SOURCES_WEB, Collections.EMPTY_MAP, null);
+                url, JSON_ASPX, QUERY_SUSHI_SOURCES_WEB, Collections.EMPTY_MAP, null);
         assertNotNull(result);
     }
 
@@ -372,7 +381,7 @@ public class RestClientTest {
         HttpURLConnection connection = mockOkConnection(client);
         Mockito.when(connection.getOutputStream()).thenReturn(Mockito.mock(OutputStream.class));
         Map<String, Object> result = client.delete(url,
-                JSON_ASPX, QUERY_SUSHI_SOURCES_WEB, null);
+                url, JSON_ASPX, QUERY_SUSHI_SOURCES_WEB, null);
         assertNotNull(result);
     }
 
@@ -382,7 +391,7 @@ public class RestClientTest {
         HttpURLConnection connection = mockOkConnection(client);
         Mockito.when(connection.getOutputStream()).thenReturn(Mockito.mock(OutputStream.class));
         Map<String, Object> result = client.post(url,
-                JSON_ASPX, QUERY_SUSHI_SOURCES_WEB, Collections.EMPTY_MAP, Collections.singletonMap("header", "value"));
+                url, JSON_ASPX, QUERY_SUSHI_SOURCES_WEB, Collections.EMPTY_MAP, Collections.singletonMap("header", "value"));
         assertNotNull(result);
     }
 
@@ -392,7 +401,7 @@ public class RestClientTest {
         HttpURLConnection connection = mockOkConnection(client);
         Mockito.when(connection.getOutputStream()).thenReturn(Mockito.mock(OutputStream.class));
         Map<String, Object> result = client.put(url,
-                JSON_ASPX, QUERY_SUSHI_SOURCES_WEB, null, null);
+                url, JSON_ASPX, QUERY_SUSHI_SOURCES_WEB, null, null);
         assertNotNull(result);
     }
 

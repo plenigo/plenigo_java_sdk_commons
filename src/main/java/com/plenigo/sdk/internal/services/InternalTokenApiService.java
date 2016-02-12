@@ -57,7 +57,7 @@ public class InternalTokenApiService {
         params.put(ApiParams.OAUTH_ACCESS_CODE, request.getCode());
         params.put(ApiParams.REDIRECT_URI, request.getRedirectUri());
         SdkUtils.addIfNotNull(params, ApiParams.STATE, request.getCsrfToken());
-        Map<String, Object> result = HttpConfig.get().getClient().post(url, ApiURLs.GET_ACCESS_TOKEN,
+        Map<String, Object> result = HttpConfig.get().getClient().post(url, ApiURLs.GET_ACCESS_TOKEN, ApiURLs.GET_ACCESS_TOKEN,
                 SdkUtils.buildUrlQueryString(params), null, JWT.generateJWTTokenHeader(companyId, secret));
         return validateAndBuildResponse(request.getCsrfToken(), result);
     }
@@ -81,7 +81,7 @@ public class InternalTokenApiService {
         params.put(ApiParams.TOKEN_GRANT_TYPE, TokenGrantType.REFRESH_TOKEN.getName());
         params.put(ApiParams.REFRESH_TOKEN, request.getRefreshToken());
         SdkUtils.addIfNotNull(params, ApiParams.STATE, request.getCsrfToken());
-        Map<String, Object> result = HttpConfig.get().getClient().post(url, ApiURLs.REFRESH_ACCESS_TOKEN
+        Map<String, Object> result = HttpConfig.get().getClient().post(url, ApiURLs.GET_ACCESS_TOKEN, ApiURLs.REFRESH_ACCESS_TOKEN
                 , SdkUtils.buildUrlQueryString(params), null, JWT.generateJWTTokenHeader(companyId, secret));
         result.put(ApiResults.REFRESH_TOKEN, request.getRefreshToken());
         return validateAndBuildResponse(request.getCsrfToken(), result);

@@ -202,19 +202,20 @@ public class RestClient {
      * This method does a HTTP request and reads the response as a JSON object
      * and puts it into a {@link java.util.Map}.
      *
-     * @param apiUrl  The URL of the method call
-     * @param method  The method to call e.g. (GET or POST)
-     * @param action  The action to call
-     * @param query   The query string to use
-     * @param body    The json body to send
-     * @param headers The headers to send
+     * @param apiUrl       The URL of the method call
+     * @param referenceUrl The template url used as reference
+     * @param method       The method to call e.g. (GET or POST)
+     * @param action       The action to call
+     * @param query        The query string to use
+     * @param body         The json body to send
+     * @param headers      The headers to send
      *
      * @return map of JSON based results
      *
      * @throws PlenigoException whenever an error happens
      */
     @SuppressWarnings("unchecked")
-    private Map<String, Object> call(String apiUrl, final String method,
+    private Map<String, Object> call(String apiUrl, String referenceUrl, final String method,
                                      final String action, final String query, final Map<String, String> body, final Map<String, String> headers)
             throws PlenigoException {
         String restCallInfo = String.format("rest resource call: [apiUrl: %s, method: %s, action: %s]", apiUrl, method
@@ -224,7 +225,7 @@ public class RestClient {
             HttpURLConnection con = getHttpConnection(apiUrl, action, query, headers);
             con.setRequestMethod(method);
             addBodyToRequest(con, body);
-            return handleResponse(con, action);
+            return handleResponse(con, referenceUrl, action);
         } catch (ConnectException e) {
             throw new PlenigoException(ErrorCode.CONNECTION_ERROR, restCallInfo + " had a connection error", e);
         } catch (UnknownHostException e) {
@@ -260,8 +261,9 @@ public class RestClient {
     /**
      * This handles the response or throws a PlenigoException based on the response code.
      *
-     * @param con      The HTTPConnection
-     * @param resource The api resource name used
+     * @param con          The HTTPConnection
+     * @param referenceUrl The template url used as reference
+     * @param resource     The api resource name used
      *
      * @return A Map that represents the json response
      *
@@ -269,7 +271,8 @@ public class RestClient {
      * @throws ParseException   If there was an error parsing the response given as a JSON
      * @throws PlenigoException whenever an error happens
      */
-    private Map<String, Object> handleResponse(HttpURLConnection con, String resource) throws IOException, ParseException, PlenigoException {
+    private Map<String, Object> handleResponse(HttpURLConnection con, String referenceUrl, String resource) throws IOException, ParseException
+            , PlenigoException {
         Map<String, Object> json;
         InputStream in = null;
         try {
@@ -289,7 +292,11 @@ public class RestClient {
                 LOGGER.log(Level.FINEST, "Parsed JSON Response for resource {0}: {1}", new Object[]{resource, json});
             } else {
                 in = con.getErrorStream();
-                throw ApiExceptionTranslator.get().translate(String.valueOf(con.getResponseCode()), resource, in);
+                String urlToSend = resource;
+                if (referenceUrl != null && !referenceUrl.isEmpty()) {
+                    urlToSend = referenceUrl;
+                }
+                throw ApiExceptionTranslator.get().translate(String.valueOf(con.getResponseCode()), urlToSend, in);
             }
         } finally {
             if (in != null) {
@@ -366,70 +373,74 @@ public class RestClient {
     /**
      * This does a GET HTTP call.
      *
-     * @param apiUrl   The base API url
-     * @param resource The resource to call
-     * @param query    The query string to use
-     * @param headers  The headers to send
+     * @param apiUrl       The base API url
+     * @param referenceUrl The template url used as reference
+     * @param resource     The resource to call
+     * @param query        The query string to use
+     * @param headers      The headers to send
      *
      * @return The map result of the call
      *
      * @throws PlenigoException whenever an error happens
      */
-    public Map<String, Object> get(String apiUrl, String resource,
+    public Map<String, Object> get(String apiUrl, String referenceUrl, String resource,
                                    String query, Map<String, String> headers) throws PlenigoException {
-        return call(apiUrl, GET_METHOD, resource, query, null, headers);
+        return call(apiUrl, referenceUrl, GET_METHOD, resource, query, null, headers);
     }
 
     /**
      * This does a POST HTTP call and accepts a body to be sent as a json object.
      *
-     * @param apiUrl   The base API url
-     * @param resource The resource to call
-     * @param query    The query string to use
-     * @param body     The body to use
-     * @param headers  The headers to send
+     * @param apiUrl       The base API url
+     * @param referenceUrl The template url used as reference
+     * @param resource     The resource to call
+     * @param query        The query string to use
+     * @param body         The body to use
+     * @param headers      The headers to send
      *
      * @return The map result of the call
      *
      * @throws PlenigoException whenever an error happens
      */
-    public Map<String, Object> post(String apiUrl, String resource,
+    public Map<String, Object> post(String apiUrl, String referenceUrl, String resource,
                                     String query, Map<String, String> body, Map<String, String> headers) throws PlenigoException {
-        return call(apiUrl, POST_METHOD, resource, query, body, headers);
+        return call(apiUrl, referenceUrl, POST_METHOD, resource, query, body, headers);
     }
 
     /**
      * This does a DELETE HTTP call.
      *
-     * @param apiUrl   The base API url
-     * @param resource The resource to call
-     * @param query    The query string to use
-     * @param headers  The headers to send
+     * @param apiUrl       The base API url
+     * @param referenceUrl The template url used as reference
+     * @param resource     The resource to call
+     * @param query        The query string to use
+     * @param headers      The headers to send
      *
      * @return The map result of the call
      *
      * @throws PlenigoException whenever an error happens
      */
-    public Map<String, Object> delete(String apiUrl, String resource,
+    public Map<String, Object> delete(String apiUrl, String referenceUrl, String resource,
                                       String query, Map<String, String> headers) throws PlenigoException {
-        return call(apiUrl, DELETE_METHOD, resource, query, null, headers);
+        return call(apiUrl, referenceUrl, DELETE_METHOD, resource, query, null, headers);
     }
 
     /**
      * This does a PUT HTTP call and accepts a body to be sent as a json object.
      *
-     * @param apiUrl   The base API url
-     * @param resource The resource to call
-     * @param query    The query string to use
-     * @param body     The body to use
-     * @param headers  The headers to send
+     * @param apiUrl       The base API url
+     * @param referenceUrl The template url used as reference
+     * @param resource     The resource to call
+     * @param query        The query string to use
+     * @param body         The body to use
+     * @param headers      The headers to send
      *
      * @return The map result of the call
      *
      * @throws PlenigoException whenever an error happens
      */
-    public Map<String, Object> put(String apiUrl, String resource,
+    public Map<String, Object> put(String apiUrl, String referenceUrl, String resource,
                                    String query, Map<String, String> body, Map<String, String> headers) throws PlenigoException {
-        return call(apiUrl, PUT_METHOD, resource, query, body, headers);
+        return call(apiUrl, referenceUrl, PUT_METHOD, resource, query, body, headers);
     }
 }
