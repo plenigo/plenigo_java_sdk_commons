@@ -3,6 +3,7 @@ package com.plenigo.sdk.internal.util;
 import com.plenigo.sdk.PlenigoException;
 import com.plenigo.sdk.internal.ApiURLs;
 import com.plenigo.sdk.internal.ErrorCode;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -29,6 +30,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyMap;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doReturn;
 import static org.powermock.api.support.membermodification.MemberMatcher.method;
 
 /**
@@ -51,15 +53,22 @@ public class RestClientTest {
      */
     private static final String JSON_ASPX = "/json.aspx";
     private static final String LOGGED_IN_OK_JSON = "{\"userId\":{\"Error\":\"cannot be null\",\"Rejected Value\":\"null\"}}";
-    public static final String API_URL = "http://jsonplaceholder.typicode.com/posts/1";
     /**
      * URL of a test API.
      */
-    private String url = "http://api.search.live.net";
+    private String API_URL = "http://example.com";
+    private String url = "http://example.com";
+
+    private RestClient client;
+
+    @Before
+    public void setUp() throws PlenigoException {
+        client = Mockito.mock(RestClient.class);
+        doReturn(new HashMap()).when(client).get(anyString(), anyString(), anyString(), anyString(), anyMap());
+    }
 
     @Test
     public final void testGetCallToApi() throws PlenigoException {
-        RestClient client = new RestClient();
         String referenceUrl = API_URL;
         Map<String, Object> stringObjectMap = client.get(API_URL, referenceUrl, "", null, null);
         assertNotNull(stringObjectMap);
@@ -67,22 +76,23 @@ public class RestClientTest {
 
     @Test
     public final void testGetCallToApiWithHeaders() throws PlenigoException {
-        RestClient client = new RestClient();
+        
         String referenceUrl = API_URL;
         Map<String, Object> stringObjectMap = client.get(API_URL, referenceUrl, "", null, Collections.singletonMap("SampleHeader", "SampleValue"));
         assertNotNull(stringObjectMap);
     }
+
     @Test
     public final void testPostCallToApi() throws PlenigoException {
-        RestClient client = new RestClient();
-        String referenceUrl = "http://jsonplaceholder.typicode.com/posts";
+        
+        String referenceUrl = " http://validate.jsontest.com";
         Map<String, Object> stringObjectMap = client.post(referenceUrl, referenceUrl, "", null, null, null);
         assertNotNull(stringObjectMap);
     }
 
     @Test
     public final void testPutCallToApi() throws PlenigoException {
-        RestClient client = new RestClient();
+        
         Map<String, String> data = new HashMap<String, String>();
         data.put("id", "1");
         data.put("title", "foo");
@@ -95,7 +105,7 @@ public class RestClientTest {
 
     @Test
     public final void testDeleteCallToApi() throws PlenigoException {
-        RestClient client = new RestClient();
+        
         String referenceUrl = API_URL;
         Map<String, Object> stringObjectMap = client.delete(API_URL, referenceUrl, "", null, null);
         assertNotNull(stringObjectMap);
@@ -107,7 +117,7 @@ public class RestClientTest {
      */
     @Test
     public final void testGetCall() throws PlenigoException {
-        RestClient client = new RestClient();
+        
         String referenceUrl = API_URL;
         Map<String, Object> stringObjectMap = client.get(API_URL, referenceUrl, "", null, null);
         assertNotNull(stringObjectMap);
@@ -120,7 +130,7 @@ public class RestClientTest {
     @Test
     public final void testBuildURLWithQueryParams() {
         String expectedUrl = "/json.aspx?query=sushi&sources=web";
-        RestClient client = new RestClient();
+        
         String action = JSON_ASPX;
         String query = QUERY_SUSHI_SOURCES_WEB;
         String builtURL = ReflectionTestUtils.invokeMethod(client, "buildURL", action, query);
@@ -154,7 +164,7 @@ public class RestClientTest {
     @Test
     public final void testBuildURLWithoutQueryParams() {
         String expectedUrl = JSON_ASPX;
-        RestClient client = new RestClient();
+        
         String action = JSON_ASPX;
         String builtURL = ReflectionTestUtils.invokeMethod(client, "buildURL", action, null);
         assertEquals(expectedUrl, builtURL);
@@ -167,7 +177,7 @@ public class RestClientTest {
     @Test
     public final void testBuildURLWithActionThatHasQuestionMark() {
         String expectedUrl = JSON_ASPX + RestClient.QUESTION_MARK;
-        RestClient client = new RestClient();
+        
         String query = "";
         String builtURL = ReflectionTestUtils.invokeMethod(client, "buildURL", expectedUrl, query);
         assertEquals(expectedUrl, builtURL);
@@ -182,7 +192,7 @@ public class RestClientTest {
     public final void testBuildURLWithActionThatHasQuestionMarkAndQueryString() {
         String query = "sampleQueryString";
         String expectedUrl = JSON_ASPX + RestClient.QUESTION_MARK + query;
-        RestClient client = new RestClient();
+        
         String action = JSON_ASPX;
         String builtURL = ReflectionTestUtils.invokeMethod(client, "buildURL", action, query);
         assertEquals(expectedUrl, builtURL);
@@ -197,7 +207,7 @@ public class RestClientTest {
     public final void testBuildURLWithActionThatHasQueryStringWithQuestionMark() {
         String query = "?sampleQueryString";
         String expectedUrl = JSON_ASPX + query;
-        RestClient client = new RestClient();
+        
         String action = JSON_ASPX;
         String builtURL = ReflectionTestUtils.invokeMethod(client, "buildURL", action, query);
         assertEquals(expectedUrl, builtURL);
@@ -211,7 +221,7 @@ public class RestClientTest {
     @Test
     public final void testBuildURLWithEmptyQueryParams() {
         String expectedUrl = JSON_ASPX;
-        RestClient client = new RestClient();
+        
         String action = JSON_ASPX;
         String query = "";
         String builtURL = ReflectionTestUtils.invokeMethod(client, "buildURL", action, query);
@@ -412,6 +422,6 @@ public class RestClientTest {
 
     @Test
     public final void testCreateWithUserAndPassword() throws Exception {
-        assertNotNull(new RestClient("username","password"));
+        assertNotNull(new RestClient("username", "password"));
     }
 }

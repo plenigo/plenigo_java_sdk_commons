@@ -79,7 +79,7 @@ public final class ApiURLs {
     /**
      * This URL is used to retrieve a list of products.
      */
-    public static final String LIST_PRODUCTS = API_BASE_URL + "/products";
+    public static final String LIST_PRODUCTS = API_BASE_URL + "/products/search";
 
     /**
      * This URL is used to get all the products this user has bought.
@@ -88,7 +88,7 @@ public final class ApiURLs {
     /**
      * This URL is used to retrieve a list of categories.
      */
-    public static final String LIST_CATEGORIES = API_BASE_URL + "/categories";
+    public static final String LIST_CATEGORIES = API_BASE_URL + "/categories/search";
 
     /**
      * This URL is used to retrieve category information.

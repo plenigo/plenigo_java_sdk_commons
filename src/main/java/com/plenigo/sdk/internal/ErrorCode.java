@@ -27,6 +27,8 @@ public enum ErrorCode {
     SHIPPING_NOT_ALLOWED("shipping_not_allowed", "This product type doesn't allow shipping cost!"),
     PRODUCT_ACCESS_ALLOWED("product_access_allowed", "This user has access to this product"),
     APP_ID_DELETED("app_id_deleted", "The app id was deleted"),
+    PROD_ID_TOO_LONG("prod_id_too_long", "The Product ID can be up to 20 chars long!"),
+    PROD_ID_REPL_TOO_LONG("prod_rep_id_too_long", "The Product ID replacement can be up to 20 chars long!"),
     INCORRECT_MOBILE_SECRET("incorrect_mobile_secret", "The mobile secret or the customer id is incorrect"),
     COMPANY_NOT_QUALIFIED("company_not_qualified", "The company is not qualified for a closed user group"),
     OVERRIDE_MODE_REQUIRES_PRICE("override_mode_req_price", "You must provide a price in the product object to make use of the override mode!");
@@ -40,7 +42,7 @@ public enum ErrorCode {
      * @param errorCode The error code
      * @param errorMsg  The error message
      */
-    private ErrorCode(String errorCode, String errorMsg) {
+    ErrorCode(String errorCode, String errorMsg) {
         this.code = errorCode;
         this.errorMsg = errorMsg;
     }
@@ -51,7 +53,7 @@ public enum ErrorCode {
      *
      * @param errorCode The error code
      */
-    private ErrorCode(String errorCode) {
+    ErrorCode(String errorCode) {
         this.code = errorCode;
     }
 
