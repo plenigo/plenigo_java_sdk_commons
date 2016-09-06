@@ -261,4 +261,13 @@ public final class ApiParams {
      * Transaction status parameter.
      */
     public static final String TRANSACTION_STATUS = "transactionStatus";
+
+    /**
+     * Product id replacement parameter.
+     */
+    public static final String PRODUCT_ID_REPLACEMENT = "pir";
+    /**
+     * Segment id parameter.
+     */
+    public static final String SEGMENT_ID = "si";
 }
