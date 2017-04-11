@@ -31,7 +31,12 @@ public enum ErrorCode {
     PROD_ID_REPL_TOO_LONG("prod_rep_id_too_long", "The Product ID replacement can be up to 20 chars long!"),
     INCORRECT_MOBILE_SECRET("incorrect_mobile_secret", "The mobile secret or the customer id is incorrect"),
     COMPANY_NOT_QUALIFIED("company_not_qualified", "The company is not qualified for a closed user group"),
-    OVERRIDE_MODE_REQUIRES_PRICE("override_mode_req_price", "You must provide a price in the product object to make use of the override mode!");
+    OVERRIDE_MODE_REQUIRES_PRICE("override_mode_req_price", "You must provide a price in the product object to make use of the override mode!"),
+    SOURCE_URL_TOO_LONG("source_url_too_long", "The provided source url must be at most 255 characters long."),
+    TARGET_URL_TOO_LONG("target_url_too_long", "The provided target url must be at most 255 characters long."),
+    AFFILIATE_ID_TOO_LONG("affiliate_id_too_long","The provided affiliate id must be most 50 characters long"),
+    ELEMENT_ID_TOO_LONG("element_id_too_long","The provided element id must be most 100 character long");
+
 
     private String code;
     private String errorMsg;
