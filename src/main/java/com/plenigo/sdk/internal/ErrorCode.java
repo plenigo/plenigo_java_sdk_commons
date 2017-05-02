@@ -37,7 +37,6 @@ public enum ErrorCode {
     AFFILIATE_ID_TOO_LONG("affiliate_id_too_long","The provided affiliate id must be most 50 characters long"),
     ELEMENT_ID_TOO_LONG("element_id_too_long","The provided element id must be most 100 character long");
 
-
     private String code;
     private String errorMsg;
 
@@ -51,7 +50,6 @@ public enum ErrorCode {
         this.code = errorCode;
         this.errorMsg = errorMsg;
     }
-
 
     /**
      * This constructs an error code enum with it's code.

@@ -40,6 +40,7 @@ public class InternalUserApiServiceTest {
     private RestClient restClient;
     private String SECRET_ID = "AMXzF7qJ9y0uuz2IawRIk6ZMLVeYKq9yXh7lURXQ";
     private String COMPANY_ID = "h7evZBaXvhaLVHYRTIHD";
+    private boolean USE_EXTERNAL_CUSTOMER_ID = false;
 
     @Before
     public void setup() throws PlenigoException {
@@ -55,24 +56,23 @@ public class InternalUserApiServiceTest {
 
     @Test
     public void testSuccessfulHasUserBought() throws Exception {
-
         Mockito.when(restClient.get(anyString(), anyString(), anyString(), anyString(), anyMap()))
                 .thenReturn(Collections.singletonMap("enabled", (Object) "true"));
-        assertTrue(internalUserApiService.hasUserBought("BASE", "CUSTOMER_ID", SECRET_ID, COMPANY_ID, false, Collections.singletonList("")));
+        assertTrue(internalUserApiService.hasUserBought("BASE", "CUSTOMER_ID", SECRET_ID, COMPANY_ID, false, Collections.singletonList(""), USE_EXTERNAL_CUSTOMER_ID));
     }
 
     @Test
     public void testUnsuccessfulHasUserBoughtBecauseOfNoAccess() throws Exception {
         Mockito.when(restClient.get(anyString(), anyString(), anyString(), anyString(), anyMap()))
                 .thenThrow(new PlenigoException(ErrorCode.CANNOT_ACCESS_PRODUCT, "", null));
-        assertFalse(internalUserApiService.hasUserBought("BASE", "CUSTOMER_ID", SECRET_ID, COMPANY_ID, false, Collections.singletonList("")));
+        assertFalse(internalUserApiService.hasUserBought("BASE", "CUSTOMER_ID", SECRET_ID, COMPANY_ID, false, Collections.singletonList(""), USE_EXTERNAL_CUSTOMER_ID));
     }
 
     @Test(expected = PlenigoException.class)
     public void testUnsuccessfulHasUserBoughtBecauseOfInternalServerError() throws Exception {
         Mockito.when(restClient.get(anyString(), anyString(), anyString(), anyString(), anyMap()))
                 .thenThrow(new PlenigoException(ErrorCode.SERVER, "", null));
-        assertFalse(internalUserApiService.hasUserBought("BASE", "CUSTOMER_ID", SECRET_ID, COMPANY_ID, false, Collections.singletonList("")));
+        assertFalse(internalUserApiService.hasUserBought("BASE", "CUSTOMER_ID", SECRET_ID, COMPANY_ID, false, Collections.singletonList(""), USE_EXTERNAL_CUSTOMER_ID));
     }
 
     @Test

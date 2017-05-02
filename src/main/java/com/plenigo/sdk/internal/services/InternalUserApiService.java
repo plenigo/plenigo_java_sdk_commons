@@ -17,7 +17,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
  * <p>
  * This class represents the internal user services functionality.
@@ -35,18 +34,19 @@ public class InternalUserApiService {
     private static final Logger LOGGER = Logger.getLogger(InternalUserApiService.class.getName());
 
     /**
-     * @param baseUrl    The base url for the request
-     * @param customerId The customer id
-     * @param secret     The company secret
-     * @param companyId  The company id
-     * @param testMode   The test mode
-     * @param productIds The product ids
+     * @param baseUrl               The base url for the request
+     * @param customerId            The customer id
+     * @param secret                The company secret
+     * @param companyId             The company id
+     * @param testMode              The test mode
+     * @param productIds            The product ids
+     * @param useExternalCustomerId Flag indicating if the customer id parameter is an internal plenigo id or an external customer id
      *
      * @return a boolean indicating if the user has bought the product or not
      *
-     * @throws PlenigoException if any error happensyea i
+     * @throws PlenigoException if any error happens.
      */
-    public boolean hasUserBought(String baseUrl, String customerId, String secret, String companyId, boolean testMode, List<String> productIds)
+    public boolean hasUserBought(String baseUrl, String customerId, String secret, String companyId, boolean testMode, List<String> productIds, boolean useExternalCustomerId)
             throws PlenigoException {
         Map<String, Object> params = new HashMap<String, Object>();
         //The checksum expects the parameters in this order:
@@ -54,6 +54,7 @@ public class InternalUserApiService {
         params.put(ApiParams.CUSTOMER_ID, customerId);
         params.put(ApiParams.PRODUCT_ID, productIds);
         params.put(ApiParams.TEST_MODE, testMode);
+        params.put(ApiParams.USE_EXTERNAL_CUSTOMER_ID, useExternalCustomerId);
         try {
             HttpConfig.get().getClient().get(baseUrl, ApiURLs.USER_PRODUCT_ACCESS, ApiURLs.USER_PRODUCT_ACCESS, SdkUtils.buildUrlQueryString(params)
                     , JWT.generateJWTTokenHeader(companyId, secret));
@@ -89,7 +90,6 @@ public class InternalUserApiService {
         }
         return isEnabled;
     }
-
 
     /**
      * This method retrieves user data with the provided access token.
