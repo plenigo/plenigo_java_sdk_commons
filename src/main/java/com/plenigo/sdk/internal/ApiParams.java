@@ -17,7 +17,6 @@ package com.plenigo.sdk.internal;
  */
 public final class ApiParams {
 
-
     /**
      * Default constructor.
      */
@@ -83,7 +82,6 @@ public final class ApiParams {
      */
     public static final String COMPANY_ID = "companyId";
 
-
     /**
      * Secret parameter.
      */
@@ -103,6 +101,11 @@ public final class ApiParams {
      * Test mode parameter.
      */
     public static final String TEST_MODE = "testMode";
+
+    /**
+     * External customer id parameter.
+     */
+    public static final String USE_EXTERNAL_CUSTOMER_ID = "useExternalCustomerId";
 
     /**
      * Access token parameter.
