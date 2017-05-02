@@ -40,7 +40,7 @@ public class InternalUserApiService {
      * @param companyId             The company id
      * @param testMode              The test mode
      * @param productIds            The product ids
-     * @param useExternalCustomerId The customer id.
+     * @param useExternalCustomerId Flag indicating if the customer id parameter is an internal plenigo id or an external customer id
      *
      * @return a boolean indicating if the user has bought the product or not
      *
