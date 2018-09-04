@@ -9,6 +9,7 @@ import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,7 +17,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * <p>
@@ -219,6 +224,17 @@ public class SdkUtilsTest {
         assertTrue(val.isEmpty());
     }
 
+    @Test
+    public void buildUrlQueryString() {
+        List<String> list = new ArrayList<String>();
+        list.add("valueTwo");
+        list.add("valueThree");
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("keyOne", "valueOne");
+        map.put("keyTwo", list);
+        String result = SdkUtils.buildUrlQueryString(map);
+        assertEquals("Returned string is not correct.", "keyTwo=valueTwo&keyTwo=valueThree&keyOne=valueOne", result);
+    }
 
     @Test
     public void testGetMapFromStringWithLessThanTwoParameters() {
@@ -276,7 +292,7 @@ public class SdkUtilsTest {
 
     @Test
     public void testToCsv() throws PlenigoException {
-       List<String> values = Arrays.asList("1","2","3");
+        List<String> values = Arrays.asList("1", "2", "3");
         String expectedReturn = "1,2,3";
         assertEquals(expectedReturn, SdkUtils.toCsv(values));
     }

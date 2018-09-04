@@ -136,6 +136,9 @@ public final class SdkUtils {
             if (mapValue instanceof Collection) {
                 Collection values = (Collection) mapValue;
                 for (Object collVal : values) {
+                    if(stringBuilder.length() > 0 && stringBuilder.indexOf(entrySeparator) != stringBuilder.length() - 1) {
+                        stringBuilder.append(entrySeparator);
+                    }
                     if (collVal != null) {
                         value = collVal.toString();
                     }
